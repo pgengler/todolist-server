@@ -10,6 +10,15 @@
 			{{outlet}}
 		</script>
 
+		<script type="text/x-handlebars" data-template-name="items">
+			Items
+			<ul>
+			{{#each controller}}
+				<li>{{event}}</li>
+			{{/each}}
+			</ul>
+		</script>
+
 		<script src="foundation/js/vendor/modernizr.js"></script>
 		<script src="foundation/js/vendor/jquery.js"></script>
 		<script src="foundation/js/foundation.min.js"></script>

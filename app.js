@@ -1,5 +1,17 @@
 var App = Ember.Application.create();
-App.ApplicationAdapter = DS.FixtureAdapter;
+App.ApplicationAdapter = DS.FixtureAdapter.extend();
+
+App.Router.map(function() {
+	this.route('items');
+});
+
+App.ItemsRoute = Ember.Route.extend({
+	model: function() {
+		return this.store.find('item');
+	}
+});
+
+App.ItemsController = Ember.ArrayController.extend();
 
 App.Item = DS.Model.extend({
 	done: DS.attr('boolean'),
