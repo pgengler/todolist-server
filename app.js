@@ -47,5 +47,6 @@ App.Item.FIXTURES = [
 	{ id: 2, done: true, date: new Date(), event: "Create some fixture data", location: null, startTime: null, endTime: null },
 	{ id: 3, done: false, date: new Date(), event: "With a start time only", location: null, startTime: '0400', endTime: null },
 	{ id: 4, done: false, date: new Date(), event: "With an end time only", location: null, startTime: null, endTime: '1600' },
-	{ id: 5, done: false, date: new Date(), event: "With start and times", location: null, startTime: '0400', endTime: '1600' }
+	{ id: 5, done: false, date: new Date(), event: "With start and times", location: null, startTime: '0400', endTime: '1600' },
+	{ id: 6, done: false, date: null, event: "Item without a date", location: null, startTime: null, endTime: null }
 ];
