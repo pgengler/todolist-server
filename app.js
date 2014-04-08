@@ -1,6 +1,13 @@
 var App = Ember.Application.create();
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
+Ember.Handlebars.helper('formatDate', function(value) {
+	if (value) {
+		return value.strftime('%a (%m/%d)');
+	}
+	return "--";
+});
+
 App.Router.map(function() {
 	this.route('items');
 });

@@ -16,6 +16,7 @@
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
+						<th>Date</th>
 						<th>Event</th>
 						<th>Location</th>
 						<th>Time</th>
@@ -34,6 +35,7 @@
 				<td>
 					{{input type="checkbox" checked=done}}
 				</td>
+				<td>{{formatDate date}}</td>
 				<td>{{event}}</td>
 				<td>{{location}}</td>
 				<td>{{time}}</td>
@@ -46,6 +48,7 @@
 		<script>
 			$(document).foundation();
 		</script>
+		<script src="strftime.js"></script>
 		<script src="handlebars-v1.3.0.js"></script>
 		<script src="ember-v1.5.0.js"></script>
 		<script src="http://builds.emberjs.com/canary/ember-data.js"></script>
