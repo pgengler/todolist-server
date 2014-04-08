@@ -31,7 +31,7 @@
 		</script>
 
 		<script type="text/x-handlebars" data-template-name="_item">
-			<tr>
+			<tr {{bindAttr class=rowClass}}>
 				<td>
 					{{input type="checkbox" checked=done}}
 				</td>

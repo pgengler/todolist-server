@@ -1,3 +1,5 @@
+(function() {
+
 var App = Ember.Application.create();
 App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
@@ -18,7 +20,9 @@ App.ItemsRoute = Ember.Route.extend({
 	}
 });
 
-App.ItemsController = Ember.ArrayController.extend();
+App.ItemsController = Ember.ArrayController.extend({
+	sortProperties: [ 'date', 'startTime', 'endTime', 'event', 'location' ]
+});
 
 App.Item = DS.Model.extend({
 	done: DS.attr('boolean'),
@@ -39,7 +43,26 @@ App.Item = DS.Model.extend({
 			return '-' + endTime;
 		}
 		return "";
-	}.property('startTime', 'endTime')
+	}.property('startTime', 'endTime'),
+
+	rowClass: function() {
+		var classes = [ ];
+		if (this.get('done')) {
+			classes.push('done');
+		}
+		var today = new Date();
+		var date = this.get('date');
+		if (!date) {
+			classes.push('undated');
+		} else if (datesEqual(date, today)) {
+			classes.push('today');
+		} else if (date < today) {
+			classes.push('past');
+		} else {
+			classes.push('future');
+		}
+		return classes.join(' ');
+	}.property('done', 'date')
 });
 
 App.Item.FIXTURES = [
@@ -48,5 +71,13 @@ App.Item.FIXTURES = [
 	{ id: 3, done: false, date: new Date(), event: "With a start time only", location: null, startTime: '0400', endTime: null },
 	{ id: 4, done: false, date: new Date(), event: "With an end time only", location: null, startTime: null, endTime: '1600' },
 	{ id: 5, done: false, date: new Date(), event: "With start and times", location: null, startTime: '0400', endTime: '1600' },
-	{ id: 6, done: false, date: null, event: "Item without a date", location: null, startTime: null, endTime: null }
+	{ id: 6, done: false, date: null, event: "Item without a date", location: null, startTime: null, endTime: null },
+	{ id: 7, done: false, date: new Date("2014-04-07T23:59:59"), event: "Item with an older date", location: null, startTime: null, endTime: null }
 ];
+
+function datesEqual(a, b)
+{
+	return (a.getFullYear() == b.getFullYear() && a.getMonth() == b.getMonth() && a.getDate() == b.getDate());
+}
+
+})();
