@@ -12,11 +12,32 @@
 
 		<script type="text/x-handlebars" data-template-name="items">
 			Items
-			<ul>
-			{{#each controller}}
-				<li>{{event}}</li>
-			{{/each}}
+			<table>
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						<th>Event</th>
+						<th>Location</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each}}
+						{{partial 'item'}}
+					{{/each}}
+				</tbody>
 			</ul>
+		</script>
+
+		<script type="text/x-handlebars" data-template-name="_item">
+			<tr>
+				<td>
+					{{input type="checkbox" checked=done}}
+				</td>
+				<td>{{event}}</td>
+				<td>{{location}}</td>
+				<td>{{startTime}}</td>
+			</tr>
 		</script>
 
 		<script src="foundation/js/vendor/modernizr.js"></script>
