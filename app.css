@@ -1,0 +1,69 @@
+table.items {
+	width: 100%;
+}
+
+table.items thead th.done {
+	width: 1.5em;
+}
+
+table.items thead th.date {
+	width: 6.5em;
+}
+
+table.items thead th.event {
+
+}
+
+table.items thead th.location {
+	width: 33%;
+}
+
+table.items thead th.times {
+	width: 10%;
+}
+
+
+/* Row styles */
+.today {
+	background-color: #C2E1FF;
+}
+
+	.today.mark {
+		background-color: #6BBAFF;
+	}
+
+	.today.done {
+		background-color: #E5F3FF;
+	}
+
+.past {
+	background-color: #FFCB9E;
+}
+
+	.past.mark {
+		background-color: #FF2E35;
+	}
+
+	.past.done {
+		background-color: #EEE;
+	}
+
+.future {
+	background-color: white;
+}
+
+	.future.mark {
+		background-color: #A1FF9E;
+	}
+
+.undated {
+	background-color: white;
+}
+
+		.undated.done {
+		background-color: #EEE;
+	}
+
+	.undated.mark {
+		background-color: #A1FF9E;
+	}
