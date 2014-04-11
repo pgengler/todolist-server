@@ -30,12 +30,19 @@
 		</script>
 
 		<script type="text/x-handlebars" data-template-name="_item">
-			<tr {{bindAttr class=rowClass}}>
+			<tr {{bind-attr class=rowClass}}>
 				<td>
 					{{input type="checkbox" checked=done}}
 				</td>
 				<td>{{formatDate date}}</td>
-				<td>{{event}}</td>
+				<td>
+					{{event}}
+					<div class="tags">
+						{{#each tag in tags}}
+							{{tag.name}}, 
+						{{/each}}
+					</div>
+				</td>
 				<td>{{location}}</td>
 				<td>{{time}}</td>
 			</tr>
