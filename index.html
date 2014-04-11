@@ -37,15 +37,19 @@
 				<td>{{formatDate date}}</td>
 				<td>
 					{{event}}
-					<div class="tags">
-						{{#each tag in tags}}
-							{{tag.name}}, 
+					<ul class="tags">
+						{{#each tags}}
+							{{partial 'tag'}}
 						{{/each}}
-					</div>
+					</ul>
 				</td>
 				<td>{{location}}</td>
 				<td>{{time}}</td>
 			</tr>
+		</script>
+
+		<script type="text/x-handlebars" data-template-name="_tag">
+			<li {{bind-attr class=":tag styleClass"}}>{{name}}</li>
 		</script>
 
 		<script src="strftime.js"></script>
