@@ -71,6 +71,7 @@ table.items thead th.times {
 table.items ul.tags {
 	float: right;
 	list-style-type: none;
+	margin: 0;
 }
 	table.items ul.tags li.tag {
 		display: inline-block;
@@ -79,8 +80,9 @@ table.items ul.tags {
 .tag {
 	border-radius: 2px;
 	font-family: sans-serif;
-	font-size: .8em;
+	font-size: 70%;
 	min-width: 1em;
+	padding: 0.1em 0.5em;
 	text-align: center;
 	white-space: nowrap;
 }
@@ -206,5 +208,3 @@ table.items ul.tags {
 		background-color: #006531;
 		color: #F7F7EF;
 	}
-
-
