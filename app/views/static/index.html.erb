@@ -1,0 +1,46 @@
+<script type="text/x-handlebars" data-template-name="application">
+	{{outlet}}
+</script>
+
+<script type="text/x-handlebars" data-template-name="items">
+	Items
+	<table class="items">
+		<thead>
+			<tr>
+				<th class="done">&nbsp;</th>
+				<th class="date">Date</th>
+				<th class="event">Event</th>
+				<th class="location">Location</th>
+				<th class="times">Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each}}
+				{{partial 'item'}}
+			{{/each}}
+		</tbody>
+	</ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_item">
+	<tr {{bind-attr class=rowClass}}>
+		<td>
+			{{input type="checkbox" checked=done}}
+		</td>
+		<td>{{formatDate date}}</td>
+		<td>
+			{{event}}
+			<ul class="tags">
+				{{#each tags}}
+					{{partial 'tag'}}
+				{{/each}}
+			</ul>
+		</td>
+		<td>{{location}}</td>
+		<td>{{time}}</td>
+	</tr>
+</script>
+
+<script type="text/x-handlebars" data-template-name="_tag">
+	<li {{bind-attr class=":tag styleClass"}}>{{name}}</li>
+</script>
