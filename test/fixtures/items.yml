@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2014-05-28
+  event: MyString
+  location: MyString
+  start: 2014-05-28 14:59:59
+  end: 2014-05-28 14:59:59
+  done: false
+  deleted: false
+
+two:
+  date: 2014-05-28
+  event: MyString
+  location: MyString
+  start: 2014-05-28 14:59:59
+  end: 2014-05-28 14:59:59
+  done: false
+  deleted: false
