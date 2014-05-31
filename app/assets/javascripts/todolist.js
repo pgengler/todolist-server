@@ -10,6 +10,17 @@ Ember.Handlebars.helper('formatDate', function(value) {
 	return "--";
 });
 
+Ember.Handlebars.helper('formatTimes', function(startTime, endTime) {
+    if (startTime && endTime) {
+        return startTime + '-' + endTime;
+    } else if (startTime) {
+        return startTime;
+    } else if (endTime) {
+        return '-' + endTime;
+    }
+    return "";
+});
+
 App.Router.map(function() {
 	this.route('items');
 	this.route('tags');
@@ -17,18 +28,33 @@ App.Router.map(function() {
 
 App.ItemsRoute = Ember.Route.extend({
 	model: function() {
-		return this.store.find('item');
+		return this.store.findAll('item');
 	}
 });
 
 App.TagsRoute = Ember.Route.extend({
 	model: function() {
-		return this.store.find('tag');
+		return this.store.findAll('tag');
 	}
 });
 
 App.ItemsController = Ember.ArrayController.extend({
 	sortProperties: [ 'date', 'startTime', 'endTime', 'event', 'location' ]
+});
+
+App.ItemController = Ember.ObjectController.extend({
+   isCurrent: function() {
+       return datesEqual(this.get('date'), new Date());
+   }.property('model.date'),
+    isPast: function() {
+        return dateLessThan(this.get('date'), new Date());
+    }.property('model.date'),
+    isFuture: function() {
+        return dateGreaterThan(this.get('date'), new Date());
+    }.property('model.date'),
+    isUndated: function() {
+        return !this.get('date');
+    }.property('model.date')
 });
 
 App.Item = DS.Model.extend({
@@ -38,38 +64,6 @@ App.Item = DS.Model.extend({
 	location: DS.attr('string'),
 	startTime: DS.attr('number'),
 	endTime: DS.attr('number'),
-
-	time: function() {
-		var startTime = this.get('startTime');
-		var endTime = this.get('endTime');
-		if (startTime && endTime) {
-			return startTime + '-' + endTime;
-		} else if (startTime) {
-			return startTime;
-		} else if (endTime) {
-			return '-' + endTime;
-		}
-		return "";
-	}.property('startTime', 'endTime'),
-
-	rowClass: function() {
-		var classes = [ ];
-		if (this.get('done')) {
-			classes.push('done');
-		}
-		var today = new Date();
-		var date = this.get('date');
-		if (!date) {
-			classes.push('undated');
-		} else if (datesEqual(date, today)) {
-			classes.push('today');
-		} else if (date < today) {
-			classes.push('past');
-		} else {
-			classes.push('future');
-		}
-		return classes.join(' ');
-	}.property('done', 'date'),
 
 	tags: DS.hasMany('tag', { async: true })
 });
@@ -91,7 +85,8 @@ App.Item.FIXTURES = [
 	{ id: 4, done: false, date: new Date(), event: "With an end time only", location: null, startTime: null, endTime: '1600', tags: [ ] },
 	{ id: 5, done: false, date: new Date(), event: "With start and times", location: null, startTime: '0400', endTime: '1600', tags: [ ] },
 	{ id: 6, done: false, date: null, event: "Item without a date", location: null, startTime: null, endTime: null, tags: [ ] },
-	{ id: 7, done: false, date: new Date("2014-04-07T23:59:59"), event: "Item with an older date", location: null, startTime: null, endTime: null, tags: [ ] }
+	{ id: 7, done: false, date: new Date("2014-04-07T23:59:59"), event: "Item with an older date", location: null, startTime: null, endTime: null, tags: [ ] },
+	{ id: 8, done: false, date: new Date("2999-01-01T12:00:00"), event: "Way-in-the-future item", location: null, startTime: null, endTime: null, tags: [ ] }
 ];
 
 App.Tag.FIXTURES = [
@@ -102,7 +97,48 @@ App.Tag.FIXTURES = [
 
 function datesEqual(a, b)
 {
+    if (!a && !b) {
+        return true;
+    }
+    if ((a && !b) || (!a && b)) {
+        return false;
+    }
 	return (a.getFullYear() == b.getFullYear() && a.getMonth() == b.getMonth() && a.getDate() == b.getDate());
+}
+
+function dateLessThan(a, b)
+{
+	if (!a && !b) {
+		// null on both sides is considered equal
+		return false;
+	}
+
+	if (!a && b) {
+		// null on the left is considered less than any value on the right
+		return true;
+	}
+
+	if (!b) {
+		// null on the right will never be less than any value on the left
+		return false;
+	}
+
+	if (a.getFullYear() < b.getFullYear()) {
+		return true;
+	} else if (a.getFullYear() > b.getFullYear()) {
+		return false;
+	}
+	if (a.getMonth() < b.getMonth()) {
+		return true;
+	} else if (a.getMonth() > b.getMonth()) {
+		return false;
+	}
+	return (a.getDate() < b.getDate());
+}
+
+function dateGreaterThan(a, b)
+{
+	return (!datesEqual(a, b) && !dateLessThan(a, b));
 }
 
 })();

@@ -16,14 +16,14 @@
 		</thead>
 		<tbody>
 			{{#each}}
-				{{partial 'item'}}
+				{{render 'item' this}}
 			{{/each}}
 		</tbody>
 	</ul>
 </script>
 
-<script type="text/x-handlebars" data-template-name="_item">
-	<tr {{bind-attr class=rowClass}}>
+<script type="text/x-handlebars" data-template-name="item">
+	<tr {{bind-attr class="done isCurrent isCurrent:today isPast:past isFuture:future isUndated:undated"}}>
 		<td>
 			{{input type="checkbox" checked=done}}
 		</td>
@@ -37,7 +37,7 @@
 			</ul>
 		</td>
 		<td>{{location}}</td>
-		<td>{{time}}</td>
+		<td>{{formatTimes startTime endTime}}</td>
 	</tr>
 </script>
 
