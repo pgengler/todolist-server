@@ -1,19 +1,17 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  date: 2014-05-28
-  event: MyString
-  location: MyString
-  start: 2014-05-28 14:59:59
-  end: 2014-05-28 14:59:59
+past:
+  date: 2001-01-01
+  event: Celebrate new millenium
+  location: Home
+  start: 
+  end: 
   done: false
   deleted: false
 
-two:
-  date: 2014-05-28
-  event: MyString
-  location: MyString
-  start: 2014-05-28 14:59:59
-  end: 2014-05-28 14:59:59
+future:
+  date: 9999-12-31
+  event: Dinner
+  location: Restaurant at the End of the Universe
+  start: 9999-12-31 18:00:00
+  end: 
   done: false
   deleted: false
