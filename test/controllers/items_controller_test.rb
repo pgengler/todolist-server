@@ -14,7 +14,7 @@ class ItemsControllerTest < ActionController::TestCase
 
     test "can create new items" do
         assert_difference 'Item.count' do
-            post :create, item: { event: "New event", location: "New Location" }
+            post :create, item: { date: Date.today, event: "New event", location: "New Location", start: 1.hour.ago, end: 1.hour.from_now }
         end
     end
 end
