@@ -7,6 +7,11 @@ class ItemsController < ApplicationController
         @item = Item.create!(item_params)
     end
 
+    def show
+        @item = Item.find(params[:id])
+        render json: @item
+    end
+
     private
 
     def item_params

@@ -28,4 +28,11 @@ class ItemsControllerTest < ActionController::TestCase
         assert_equal new_item_params[:start], item.start
         assert_equal new_item_params[:end], item.end
     end
+
+    test "returns data for a single item" do
+        get :show, id: items(:past)
+        assert_response :success
+        body = JSON.parse(response.body)
+        assert_equal body['item']['id'], items(:past).id
+    end
 end
