@@ -29,6 +29,12 @@ class ItemsControllerTest < ActionController::TestCase
         assert_equal new_item_params[:end], item.end
     end
 
+    test "create action returns 'created' HTTP status code after creating item" do
+        new_item_params = { date: Date.today, event: "New event" }
+        post :create, item: new_item_params
+        assert_response :created
+    end
+
     test "returns data for a single item" do
         get :show, id: items(:past)
         assert_response :success
