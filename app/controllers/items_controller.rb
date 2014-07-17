@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
     def index
-        render json: Item.all
+        render json: Item.includes(:tags).all
     end
 
     def create
