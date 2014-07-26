@@ -9,3 +9,8 @@ future:
   event: Dinner
   done: false
   deleted: false
+
+tagged:
+  date:
+  event: Item with tags
+  tags: one

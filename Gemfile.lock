@@ -29,8 +29,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (3.3.0)
-      activerecord (>= 3, < 5)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
     erubis (2.7.0)
@@ -99,7 +97,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers (~> 0.8.0)
-  acts-as-taggable-on
   jbuilder (~> 2.0)
   pg
   rails (= 4.1.1)

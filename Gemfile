@@ -8,4 +8,3 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'active_model_serializers', '~> 0.8.0'
-gem 'acts-as-taggable-on'

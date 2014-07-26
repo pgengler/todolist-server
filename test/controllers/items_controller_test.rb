@@ -9,7 +9,7 @@ class ItemsControllerTest < ActionController::TestCase
 	test "index view includes appropriate items" do
 		get :index
 		body = JSON.parse(response.body)
-		assert_equal 2, body['items'].length
+		assert_equal Item.count, body['items'].length
 	end
 
 	test "can create new items" do
