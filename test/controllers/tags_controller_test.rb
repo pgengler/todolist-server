@@ -9,15 +9,12 @@ class TagsControllerTest < ActionController::TestCase
 	end
 
 	test "updates the 'name' attribute via the 'update' method" do
-		tag = Tag.create!(name: 'test')
-
-		put :update, id: tag.id, tag: { name: 'new name' }
+		put :update, id: tags(:one), tag: { name: 'new name' }
 		assert_equal 'new name', assigns(:tag).name
 	end
 
 	test "'update' action responds with JSON" do
-		tag = Tag.create!(name: 'test')
-		put :update, id: tag.id, tag: { name: 'new name' }
+		put :update, id: tags(:one), tag: { name: 'new name' }
 
 		assert_response :success
 		body = JSON.parse(response.body)
