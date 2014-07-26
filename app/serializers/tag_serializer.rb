@@ -1,4 +1,4 @@
 class TagSerializer < ActiveModel::Serializer
-	attributes :id, :name, :items
+	attributes :id, :name
 	has_many :items, embed: :id
 end
