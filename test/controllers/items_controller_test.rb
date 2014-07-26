@@ -14,19 +14,16 @@ class ItemsControllerTest < ActionController::TestCase
 
 	test "can create new items" do
 		assert_difference 'Item.count' do
-			post :create, item: {date: Date.today, event: "New event", location: "New Location", start: '1200', end: '1400'}
+			post :create, item: {date: Date.today, event: "New event"}
 		end
 	end
 
 	test "all values are assigned to newly-created items" do
-		new_item_params = {date: Date.today, event: "New event", location: "New location", start: '1200', end: '1400'}
+		new_item_params = {date: Date.today, event: "New event"}
 		post :create, item: new_item_params
 		item = assigns(:item)
 		assert_equal new_item_params[:date], item.date
 		assert_equal new_item_params[:event], item.event
-		assert_equal new_item_params[:location], item.location
-		assert_equal new_item_params[:start], item.start
-		assert_equal new_item_params[:end], item.end
 	end
 
 	test "create action returns 'created' HTTP status code after creating item" do

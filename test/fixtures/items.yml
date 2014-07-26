@@ -1,17 +1,11 @@
 past:
   date: 2001-01-01
   event: Celebrate new millenium
-  location: Home
-  start: 
-  end: 
   done: false
   deleted: false
 
 future:
   date: 9999-12-31
   event: Dinner
-  location: Restaurant at the End of the Universe
-  start: 9999-12-31 18:00:00
-  end: 
   done: false
   deleted: false
