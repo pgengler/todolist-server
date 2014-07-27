@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140726234052) do
+ActiveRecord::Schema.define(version: 20140727015108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "item_tags", id: false, force: true do |t|
+  create_table "item_tags", force: true do |t|
     t.integer "item_id", null: false
     t.integer "tag_id",  null: false
   end

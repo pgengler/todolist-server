@@ -10,7 +10,8 @@ future:
   done: false
   deleted: false
 
-tagged:
-  date:
-  event: Item with tags
-  tags: one
+with_one_tag:
+  event: Item with one tag
+
+with_two_tags:
+  event: Item with two tags

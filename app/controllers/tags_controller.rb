@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
 	def index
-		render json: Tag.includes(:item_tags, :items).all
+		render json: Tag.includes(:item_tags).all
 	end
 
 	def update
