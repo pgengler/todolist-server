@@ -1,5 +1,5 @@
 class ItemSerializer < ActiveModel::Serializer
-	embed :ids
+	embed :ids, include: true
 	attributes :id, :date, :event, :done
 	has_many :item_tags
 
