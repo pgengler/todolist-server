@@ -10,6 +10,9 @@ future:
   done: false
   deleted: false
 
+with_no_tags:
+  event: Item with no tags
+
 with_one_tag:
   event: Item with one tag
 
