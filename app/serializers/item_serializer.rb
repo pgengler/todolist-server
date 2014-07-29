@@ -2,6 +2,7 @@ class ItemSerializer < ActiveModel::Serializer
 	embed :ids, include: true
 	attributes :id, :date, :event, :done
 	has_many :item_tags
+	has_many :tags
 
 	def date
 		if object.date
