@@ -21,4 +21,21 @@ class TagsControllerTest < ActionController::TestCase
 		assert_equal 'new name', body['tag']['name']
 	end
 
+	test "can create a new tag" do
+		assert_difference 'Tag.count' do
+			post :create, tag: { name: 'a new tag' }
+		end
+	end
+
+	test "creating a new tag responds with HTTP status 201 (created)" do
+		post :create, tag: { name: 'a new tag' }
+		assert_response :created
+	end
+
+	test "creating a new tag responds with JSON for the new tag" do
+		post :create, tag: { name: 'a new tag' }
+		body = JSON.parse(response.body)
+		assert_equal 'a new tag', body['tag']['name']
+	end
+
 end

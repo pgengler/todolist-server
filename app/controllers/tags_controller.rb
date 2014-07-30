@@ -3,6 +3,11 @@ class TagsController < ApplicationController
 		render json: Tag.includes(:item_tags).all
 	end
 
+	def create
+		@tag = Tag.create!(tag_params)
+		render json: @tag, status: :created, location: @tag
+	end
+
 	def update
 		@tag = Tag.find(params[:id])
 		@tag.update tag_params
