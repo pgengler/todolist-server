@@ -11,14 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140727015108) do
+ActiveRecord::Schema.define(version: 20140801180203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "item_tags", force: true do |t|
-    t.integer "item_id", null: false
-    t.integer "tag_id",  null: false
+    t.integer "item_id",  null: false
+    t.integer "tag_id",   null: false
+    t.integer "position"
   end
 
   add_index "item_tags", ["item_id", "tag_id"], name: "index_item_tags_on_item_id_and_tag_id", unique: true, using: :btree
