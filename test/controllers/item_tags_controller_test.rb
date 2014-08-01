@@ -29,4 +29,15 @@ class ItemTagsControllerTest < ActionController::TestCase
 		post :create, item_tag: { item_id: @item.id, tag_id: @tag.id }
 		assert_response :created
 	end
+
+	test "can retrieve data for a single record" do
+		get :show, id: item_tags(:one)
+		assert_response :success
+	end
+
+	test "includes the 'position' in the JSON response" do
+		get :show, id: item_tags(:one)
+		body = JSON.parse(response.body)
+		assert_equal 1, body['item_tag']['position']
+	end
 end

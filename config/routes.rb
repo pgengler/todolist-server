@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 		scope 'v1' do
 			resources :items
 			resources :tags, only: [ :create, :index, :update ]
-			resources :item_tags, only: [ :index, :create ]
+			resources :item_tags, only: [ :create, :index, :show ]
 		end
 	end
 end

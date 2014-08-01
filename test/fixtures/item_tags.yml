@@ -1,11 +1,14 @@
 one:
   item: items(:with_one_tag)
   tag: tags(:one)
+  position: 1
 
 two:
   item: items(:with_two_tags)
   tag: tags(:one)
+  position: 1
 
 three:
   item: items(:with_two_tags)
   tag: tags(:two)
+  position: 2

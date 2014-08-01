@@ -3,6 +3,11 @@ class ItemTagsController < ApplicationController
 		render json: ItemTag.all
 	end
 
+	def show
+		@item_tag = ItemTag.find(params[:id])
+		render json: @item_tag
+	end
+
 	def create
 		@item = Item.find(params[:item_tag][:item_id])
 		@tag = Tag.find(params[:item_tag][:tag_id])
