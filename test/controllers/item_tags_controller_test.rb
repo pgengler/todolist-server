@@ -40,4 +40,9 @@ class ItemTagsControllerTest < ActionController::TestCase
 		body = JSON.parse(response.body)
 		assert_equal 1, body['item_tag']['position']
 	end
+
+	test "can update the 'position' value" do
+		put :update, id: item_tags(:one), item_tag: { position: 42 }
+		assert_equal 42, assigns(:item_tag).position
+	end
 end

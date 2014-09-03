@@ -16,4 +16,11 @@ class ItemTagsController < ApplicationController
 
 		render json: @item_tag, status: :created
 	end
+
+	def update
+		item_tag_params = params.require(:item_tag).permit(:position)
+		@item_tag = ItemTag.find(params[:id])
+		@item_tag.update(item_tag_params)
+		render json: @item_tag
+	end
 end
