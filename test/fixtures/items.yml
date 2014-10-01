@@ -1,20 +1,9 @@
-past:
-  date: 2001-01-01
-  event: Celebrate new millenium
+incomplete:
+  day: october_1
+  event: Do something
   done: false
-  deleted: false
 
-future:
-  date: 9999-12-31
-  event: Dinner
-  done: false
-  deleted: false
-
-with_no_tags:
-  event: Item with no tags
-
-with_one_tag:
-  event: Item with one tag
-
-with_two_tags:
-  event: Item with two tags
+complete:
+  day: october_1
+  event: Something already done
+  done: true

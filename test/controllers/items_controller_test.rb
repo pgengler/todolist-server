@@ -33,14 +33,14 @@ class ItemsControllerTest < ActionController::TestCase
 	end
 
 	test "returns data for a single item" do
-		get :show, id: items(:past)
+		get :show, id: items(:incomplete)
 		assert_response :success
 		body = JSON.parse(response.body)
-		assert_equal body['item']['id'], items(:past).id
+		assert_equal body['item']['id'], items(:incomplete).id
 	end
 
 	test "updates the 'done' property" do
-		item = items(:past)
+		item = items(:incomplete)
 		post :update, id: item, item: { done: true }
 		assert_response :success
 		assert_equal true, assigns(:item).done
