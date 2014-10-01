@@ -1,7 +1,8 @@
 require 'test_helper'
 
 class DaysControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "has an 'index' action" do
+    get :index
+    assert_response :success
+  end
 end
