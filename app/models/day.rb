@@ -1,5 +1,5 @@
 class Day < ActiveRecord::Base
-  has_many :items
+  has_many :tasks
 
   def self.sliding_window
     days = [ ]

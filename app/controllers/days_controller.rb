@@ -1,5 +1,5 @@
 class DaysController < ApplicationController
   def index
-    render json: Day.includes(:items).sliding_window
+    render json: Day.includes(:tasks).sliding_window
   end
 end

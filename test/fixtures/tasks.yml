@@ -1,9 +1,9 @@
 incomplete:
   day: october_1
-  event: Do something
+  description: Do something
   done: false
 
 complete:
   day: october_1
-  event: Something already done
+  description: Something already done
   done: true

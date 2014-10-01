@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001174313) do
+ActiveRecord::Schema.define(version: 20141001212946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,9 +22,9 @@ ActiveRecord::Schema.define(version: 20141001174313) do
     t.datetime "updated_at"
   end
 
-  create_table "items", force: true do |t|
+  create_table "tasks", force: true do |t|
     t.date     "date"
-    t.string   "event"
+    t.string   "description"
     t.boolean  "done"
     t.boolean  "deleted"
     t.datetime "created_at"
@@ -32,6 +32,6 @@ ActiveRecord::Schema.define(version: 20141001174313) do
     t.integer  "day_id"
   end
 
-  add_index "items", ["day_id"], name: "index_items_on_day_id", using: :btree
+  add_index "tasks", ["day_id"], name: "index_tasks_on_day_id", using: :btree
 
 end
