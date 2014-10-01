@@ -22,6 +22,6 @@ class ItemsController < ApplicationController
 	private
 
 	def item_params
-		params.required(:item).permit(:date, :event, :done)
+		params.required(:item).permit(:event, :done, :day_id)
 	end
 end
