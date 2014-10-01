@@ -1,25 +1,25 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 september_30:
-  date: 2014-09-30
+  date: 2013-09-30
 
 october_1:
-  date: 2014-10-01
+  date: 2013-10-01
 
 october_2:
-  date: 2014-10-02
+  date: 2013-10-02
 
 october_3:
-  date: 2014-10-03
+  date: 2013-10-03
 
 october_4:
-  date: 2014-10-04
+  date: 2013-10-04
 
 october_5:
-  date: 2014-10-05
+  date: 2013-10-05
 
 october_6:
-  date: 2014-10-06
+  date: 2013-10-06
 
 october_7:
-  date: 2014-10-07
+  date: 2013-10-07
