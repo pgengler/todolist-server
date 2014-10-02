@@ -45,4 +45,10 @@ class TasksControllerTest < ActionController::TestCase
 		assert_response :success
 		assert_equal true, assigns(:task).done
 	end
+
+	test "tasks can be deleted" do
+		assert_difference('Task.count', -1) do
+			delete :destroy, id: tasks(:incomplete)
+		end
+	end
 end
