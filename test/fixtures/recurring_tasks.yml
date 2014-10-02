@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sunday_task:
+  day: 0
+  description: Something to do evert Sunday
+
+monday_task:
+  day: 1
+  description: A thing to do every Monday
