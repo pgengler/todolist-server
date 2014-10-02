@@ -2,7 +2,7 @@
 
 sunday_task:
   day: 0
-  description: Something to do evert Sunday
+  description: Something to do every Sunday
 
 monday_task:
   day: 1
