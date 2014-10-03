@@ -4,7 +4,7 @@ class RecurringTasksController < ApplicationController
     RecurringTask.days.each do |name, value|
       @days << {
           id: value,
-          day: name,
+          day: name.titleize,
           recurring_task_ids: RecurringTask.where(day: value).pluck(:id)
       }
     end
