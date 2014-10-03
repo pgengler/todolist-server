@@ -12,4 +12,11 @@ class RecurringTasksControllerTest < ActionController::TestCase
 			delete :destroy, id: recurring_tasks(:sunday_task)
 		end
 	end
+
+	test "recurring tasks can be created" do
+		assert_difference('RecurringTask.count') do
+			post :create, recurring_task: { day_id: 0, description: 'A new task for Sunday' }
+		end
+		assert_equal 'A new task for Sunday', assigns(:recurring_task).description
+	end
 end

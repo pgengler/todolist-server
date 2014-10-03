@@ -11,6 +11,11 @@ class RecurringTasksController < ApplicationController
 		render json: { recurring_task_days: @days, recurring_tasks: RecurringTask.all }
 	end
 
+	def create
+		@recurring_task = RecurringTask.create!(recurring_task_params)
+		render json: @recurring_task
+	end
+
 	def update
 		@task = RecurringTask.find(params[:id])
 		@task.update(recurring_task_params)
@@ -23,6 +28,7 @@ class RecurringTasksController < ApplicationController
 
 	private
 	def recurring_task_params
-		params.require(:recurring_task).permit(:description)
+		params[:recurring_task][:day] = params[:recurring_task][:day_id].to_i
+		params.require(:recurring_task).permit(:description, :day)
 	end
 end

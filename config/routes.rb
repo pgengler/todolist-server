@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 			resources :tasks, except: [ :edit, :new ]
 			resources :days, only: [ :index ]
 			get 'recurring_task_days' => 'recurring_tasks#index'
-			resources :recurring_tasks, only: [ :update, :destroy ]
+			resources :recurring_tasks, only: [ :create, :update, :destroy ]
 		end
 	end
 end
