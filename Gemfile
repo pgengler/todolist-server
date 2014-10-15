@@ -9,6 +9,8 @@ gem 'spring',        group: :development
 
 gem 'active_model_serializers', '~> 0.8.0'
 
+gem 'unicorn'
+
 group :development do
 	gem 'capistrano', '~> 3.0'
 	gem 'capistrano-rails'
