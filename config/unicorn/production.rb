@@ -4,7 +4,7 @@ pid "#{root}/tmp/pids/unicorn.pid"
 stderr_path "#{root}/log/unicorn.log"
 stdout_path "#{root}/log/unicorn.log"
 
-listen 6000
+listen "/tmp/todo-api.unicorn.sock"
 worker_processes 2
 timeout 30
 
