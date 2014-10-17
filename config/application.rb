@@ -20,7 +20,7 @@ module Todo
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    config.middleware.insert_before "ActionDispatch::Static", "Rack::Cors" do
+    config.middleware.use Rack::Cors do
       allow do
         origins '*.pgengler.net'
         resource '*', :headers => :any, :methods => [:get, :post, :delete, :put, :options, :head]
