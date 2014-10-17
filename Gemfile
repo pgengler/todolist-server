@@ -11,7 +11,6 @@ gem 'active_model_serializers', '~> 0.8.0'
 
 gem 'dotenv-rails'
 gem 'unicorn'
-gem 'rack-cors', :require => 'rack/cors'
 
 group :development do
 	gem 'capistrano', '~> 3.0'
