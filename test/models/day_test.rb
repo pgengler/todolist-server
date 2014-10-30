@@ -10,4 +10,12 @@ class DayTest < ActiveSupport::TestCase
 		days = Day.window(start)
 		assert_equal Date.new(2013, 12, 31), days[0].date
 	end
+
+	test "recurring tasks are not added to days in the past" do
+		yesterday = 1.day.ago
+		RecurringTask.create!(day: yesterday.wday, description: 'A recurring task for yesterday')
+
+		day = Day.create!(date: yesterday)
+		assert_equal 0, day.tasks.count
+	end
 end
