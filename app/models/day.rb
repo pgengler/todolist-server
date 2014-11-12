@@ -2,7 +2,7 @@ class Day < ActiveRecord::Base
 	after_create :populate_recurring_tasks
 	has_many :tasks
 
-	def self.window(base=Date.today)
+	def self.window(base)
 		days = [ ]
 		date = base - 1.day
 		5.times do
