@@ -5,8 +5,8 @@ class DaysController < ApplicationController
 		else
 			@date = DateTime.now
 		end
-		if request.headers.include?('HTTP_CLIENT_TIMEZONE')
-			offset = request.headers['HTTP_CLIENT_TIMEZONE'].to_i
+		if request.headers.include?('HTTP_X_CLIENT_TIMEZONE_OFFSET')
+			offset = request.headers['HTTP_X_CLIENT_TIMEZONE_OFFSET'].to_i
 			@date = @date + offset.minutes
 		end
 		@days = Day.includes(:tasks).window(@date)
