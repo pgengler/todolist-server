@@ -46,6 +46,12 @@ class DaysControllerTest < ActionController::TestCase
 		assert_equal '2014-01-02', json_response['days'][2]['date']
 	end
 
+	test "returns a single date via the 'show' action" do
+		get :show, date: '2014-11-01'
+		assert_response :success
+		assert_equal '2014-11-01', json_response['day']['date']
+	end
+
 	private
 
 	def json_response

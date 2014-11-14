@@ -19,4 +19,9 @@ class DaysController < ApplicationController
 
 		render json: @days
 	end
+
+	def show
+		@day = Day.find_or_create_by(date: params[:date])
+		render json: @day
+	end
 end
