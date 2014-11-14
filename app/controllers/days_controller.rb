@@ -1,15 +1,22 @@
 class DaysController < ApplicationController
 	def index
-		if params.include?(:date)
-			@date = Date.parse(params[:date])
-		else
-			@date = DateTime.now
+		@days = [ ]
+
+		date = params[:date] ? Date.parse(params[:date]) : Date.today
+
+		params[:before_days].to_i.times do |i|
+			offset = i + 1
+			day = Day.find_or_create_by(date: date - offset.day)
+			@days.unshift(day)
 		end
-		if request.headers.include?('HTTP_X_CLIENT_TIMEZONE_OFFSET')
-			offset = request.headers['HTTP_X_CLIENT_TIMEZONE_OFFSET'].to_i
-			@date = @date + offset.minutes
+
+		@days << Day.find_or_create_by(date: date)
+
+		params[:after_days].to_i.times do |i|
+			offset = i + 1
+			@days << Day.find_or_create_by(date: date + offset.day)
 		end
-		@days = Day.includes(:tasks).window(@date)
+
 		render json: @days
 	end
 end
