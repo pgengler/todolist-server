@@ -4,6 +4,7 @@ class Day < ActiveRecord::Base
 
 	private
 	def populate_recurring_tasks
+		return if date.nil?
 		return if date < Date.today
 		RecurringTask.where(day: date.wday).each do |recurring_task|
 			tasks.create(description: recurring_task.description)

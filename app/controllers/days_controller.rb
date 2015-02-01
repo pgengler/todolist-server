@@ -21,6 +21,9 @@ class DaysController < ApplicationController
 	end
 
 	def show
+		if params[:date] == "undated"
+			params[:date] = nil
+		end
 		@day = Day.find_or_create_by(date: params[:date])
 		render json: @day
 	end
