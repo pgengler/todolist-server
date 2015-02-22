@@ -1,8 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'ember-todo-api'
-set :repo_url, 'https://github.com/pgengler/ember-todo-api.git'
+set :application, 'todolist-server'
+set :repo_url, 'https://github.com/pgengler/todolist-server.git'
 
 set :deploy_to, '/srv/apps/todolist/server'
 
