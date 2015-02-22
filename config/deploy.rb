@@ -4,7 +4,7 @@ lock '3.2.1'
 set :application, 'ember-todo-api'
 set :repo_url, 'https://github.com/pgengler/ember-todo-api.git'
 
-set :deploy_to, '/srv/apps/todolist'
+set :deploy_to, '/srv/apps/todolist/server'
 
 set :linked_files, %w{.env}
 
@@ -15,8 +15,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      invoke 'puma:restart'
     end
   end
 
