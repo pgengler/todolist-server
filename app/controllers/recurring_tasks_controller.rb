@@ -19,6 +19,7 @@ class RecurringTasksController < ApplicationController
 	def update
 		@task = RecurringTask.find(params[:id])
 		@task.update(recurring_task_params)
+		render json: @task
 	end
 
 	def destroy
