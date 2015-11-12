@@ -24,6 +24,7 @@ class RecurringTasksController < ApplicationController
 	def destroy
 		@task = RecurringTask.find(params[:id])
 		@task.destroy!
+		head :no_content
 	end
 
 	private

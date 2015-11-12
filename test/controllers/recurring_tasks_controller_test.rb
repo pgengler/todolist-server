@@ -13,6 +13,11 @@ class RecurringTasksControllerTest < ActionController::TestCase
 		end
 	end
 
+  test "returns the correct status code when deleting a recurring task" do
+    delete :destroy, id: recurring_tasks(:sunday_task)
+    assert_response :no_content
+  end
+
 	test "recurring tasks can be created" do
 		assert_difference('RecurringTask.count') do
 			post :create, recurring_task: { day_id: 0, description: 'A new task for Sunday' }

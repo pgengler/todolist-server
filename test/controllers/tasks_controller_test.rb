@@ -51,4 +51,10 @@ class TasksControllerTest < ActionController::TestCase
 			delete :destroy, id: tasks(:incomplete)
 		end
 	end
+
+	test "returns the correct status code when deleting a task" do
+		delete :destroy, id: tasks(:incomplete)
+
+		assert_response :no_content
+	end
 end
