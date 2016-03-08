@@ -1,0 +1,9 @@
+language: ruby
+sudo: false
+script:
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rake db:test:prepare
+  - bundle exec rake
+before_script:
+  - psql -c 'create database todolist_test;' -U postgres
+  - cp config/database.travis.yml config/database.yml
