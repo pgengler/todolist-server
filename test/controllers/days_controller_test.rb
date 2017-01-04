@@ -12,7 +12,7 @@ class DaysControllerTest < ActionController::TestCase
 	end
 
 	test "returns the specified day when a date is passed" do
-		get :index, date: '2014-01-01'
+		get :index, params: { date: '2014-01-01' }
 		assert_equal '2014-01-01', json_response['days'][0]['date']
 	end
 
@@ -22,12 +22,12 @@ class DaysControllerTest < ActionController::TestCase
 	end
 
 	test "returns the correct number of days when given an after_days value" do
-		get :index, after_days: 3
+		get :index, params: { after_days: 3 }
 		assert_equal 4, json_response['days'].length
 	end
 
 	test "returns the correct days when given an after_days value" do
-		get :index, date: '2014-01-01', after_days: 3
+		get :index, params: { date: '2014-01-01', after_days: 3 }
 		assert_equal '2014-01-01', json_response['days'][0]['date']
 		assert_equal '2014-01-02', json_response['days'][1]['date']
 		assert_equal '2014-01-03', json_response['days'][2]['date']
@@ -35,19 +35,19 @@ class DaysControllerTest < ActionController::TestCase
 	end
 
 	test "returns the correct number of days when given a before_days value" do
-		get :index, before_days: 2
+		get :index, params: { before_days: 2 }
 		assert_equal 3, json_response['days'].length
 	end
 
 	test "returns the correct days when given a before_days value" do
-		get :index, date: '2014-01-02', before_days: 2
+		get :index, params: { date: '2014-01-02', before_days: 2 }
 		assert_equal '2013-12-31', json_response['days'][0]['date']
 		assert_equal '2014-01-01', json_response['days'][1]['date']
 		assert_equal '2014-01-02', json_response['days'][2]['date']
 	end
 
 	test "returns a single date via the 'show' action" do
-		get :show, date: '2014-11-01'
+		get :show, params: { date: '2014-11-01' }
 		assert_response :success
 		assert_equal '2014-11-01', json_response['day']['date']
 	end

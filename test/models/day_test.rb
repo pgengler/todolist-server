@@ -10,10 +10,10 @@ class DayTest < ActiveSupport::TestCase
 	end
 
 	test "recurring tasks are not added to days in the past" do
-		yesterday = 1.day.ago
-		RecurringTask.create!(day: yesterday.wday, description: 'A recurring task for yesterday')
+		last_week = 1.week.ago
+		RecurringTask.create!(day: last_week.wday, description: 'A recurring task for a week ago')
 
-		day = Day.create!(date: yesterday)
+		day = Day.create!(date: last_week)
 		assert_equal 0, day.tasks.count
 	end
 end
