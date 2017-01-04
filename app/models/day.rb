@@ -1,4 +1,4 @@
-class Day < ActiveRecord::Base
+class Day < ApplicationRecord
 	after_create :populate_recurring_tasks
 	has_many :tasks
 

@@ -1,4 +1,4 @@
-class RecurringTask < ActiveRecord::Base
+class RecurringTask < ApplicationRecord
   enum day: [ :sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday ]
 
   validates :description, presence: true

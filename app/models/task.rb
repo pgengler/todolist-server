@@ -1,4 +1,4 @@
-class Task < ActiveRecord::Base
+class Task < ApplicationRecord
 	belongs_to :day
 	has_and_belongs_to_many :tags
 

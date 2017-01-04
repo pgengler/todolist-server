@@ -1,10 +1,8 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5.2'
-gem 'rails-api'
+gem 'rails', '5.0.1'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'active_model_serializers', '~> 0.8.0'
