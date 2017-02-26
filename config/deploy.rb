@@ -1,5 +1,5 @@
-# config valid only for Capistrano 3.1
-lock '3.2.1'
+# config valid only for Capistrano 3.7
+lock '3.7.2'
 
 set :application, 'todolist-server'
 set :repo_url, 'https://github.com/pgengler/todolist-server.git'
