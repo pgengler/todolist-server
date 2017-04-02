@@ -2,7 +2,13 @@ class DaysController < ApplicationController
 	def index
 		@days = [ ]
 
-		date = params[:date] ? Date.parse(params[:date]) : Date.today
+		if params[:date] == 'undated'
+			date = nil
+		elsif params[:date]
+			date = Date.parse(params[:date])
+		else
+			date = Date.today
+		end
 
 		params[:before_days].to_i.times do |i|
 			offset = i + 1
@@ -17,14 +23,10 @@ class DaysController < ApplicationController
 			@days << Day.find_or_create_by(date: date + offset.day)
 		end
 
-		render json: @days
+		render json: (@days.length == 1 ? @days.first : @days)
 	end
 
 	def show
-		if params[:date] == "undated"
-			params[:date] = nil
-		end
-		@day = Day.find_or_create_by(date: params[:date])
-		render json: @day
+		render json: Day.find(params[:id])
 	end
 end
