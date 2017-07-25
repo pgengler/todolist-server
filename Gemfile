@@ -6,6 +6,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'spring',        group: :development
 
 gem 'active_model_serializers', '~> 0.8.0'
+gem 'jsonapi-resources'
 
 gem 'dotenv-rails'
 gem 'puma'

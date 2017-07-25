@@ -75,6 +75,9 @@ GEM
     jbuilder (2.6.3)
       activesupport (>= 3.0.0, < 5.2)
       multi_json (~> 1.2)
+    jsonapi-resources (0.8.1)
+      concurrent-ruby
+      rails (>= 4.0)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -157,6 +160,7 @@ DEPENDENCIES
   capistrano3-puma
   dotenv-rails
   jbuilder (~> 2.0)
+  jsonapi-resources
   pg
   puma
   rails (= 5.0.1)
