@@ -11,7 +11,10 @@ gem 'jsonapi-resources'
 gem 'dotenv-rails'
 gem 'puma'
 
-gem 'rails-controller-testing', group: :test
+group :test do
+	gem 'rails-controller-testing'
+	gem 'factory_bot_rails'
+end
 
 group :development do
 	gem 'capistrano', '~> 3.0'
@@ -19,4 +22,5 @@ group :development do
 	gem 'capistrano-rvm'
 	gem 'capistrano-bundler'
 	gem 'capistrano3-puma'
+	gem 'pry'
 end

@@ -1,9 +1,0 @@
-incomplete:
-  day: october_1
-  description: Do something
-  done: false
-
-complete:
-  day: october_1
-  description: Something already done
-  done: true

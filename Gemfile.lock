@@ -63,12 +63,18 @@ GEM
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
+    coderay (1.1.2)
     concurrent-ruby (1.0.5)
     dotenv (2.2.0)
     dotenv-rails (2.2.0)
       dotenv (= 2.2.0)
       railties (>= 3.2, < 5.1)
     erubis (2.7.0)
+    factory_bot (4.8.2)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.8.2)
+      factory_bot (~> 4.8.2)
+      railties (>= 3.0.0)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
     i18n (0.8.1)
@@ -96,6 +102,9 @@ GEM
     nokogiri (1.7.0.1)
       mini_portile2 (~> 2.1.0)
     pg (0.19.0)
+    pry (0.11.0)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
     puma (3.7.1)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -159,9 +168,11 @@ DEPENDENCIES
   capistrano-rvm
   capistrano3-puma
   dotenv-rails
+  factory_bot_rails
   jbuilder (~> 2.0)
   jsonapi-resources
   pg
+  pry
   puma
   rails (= 5.0.1)
   rails-controller-testing

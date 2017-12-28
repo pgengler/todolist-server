@@ -6,7 +6,7 @@ class DayTest < ActiveSupport::TestCase
 		RecurringTask.create!(day: tomorrow.wday, description: 'A recurring task for tomorrow')
 
 		day = Day.create!(date: tomorrow)
-		assert day.tasks.count > 0, "no recurring tasks were populated"
+		assert day.tasks.count > 0, "recurring tasks were populated"
 	end
 
 	test "recurring tasks are not added to days in the past" do

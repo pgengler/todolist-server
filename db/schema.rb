@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,33 +15,32 @@ ActiveRecord::Schema.define(version: 20141107213810) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "days", force: true do |t|
+  create_table "days", force: :cascade do |t|
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "recurring_tasks", force: true do |t|
+  create_table "recurring_tasks", force: :cascade do |t|
     t.integer  "day"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tags_tasks", id: false, force: true do |t|
+  create_table "tags_tasks", id: false, force: :cascade do |t|
     t.integer "task_id", null: false
     t.integer "tag_id",  null: false
+    t.index ["task_id"], name: "index_tags_tasks_on_task_id", using: :btree
   end
 
-  add_index "tags_tasks", ["task_id"], name: "index_tags_tasks_on_task_id", using: :btree
-
-  create_table "tasks", force: true do |t|
+  create_table "tasks", force: :cascade do |t|
     t.date     "date"
     t.text     "description"
     t.boolean  "done"
@@ -50,8 +48,7 @@ ActiveRecord::Schema.define(version: 20141107213810) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "day_id"
+    t.index ["day_id"], name: "index_tasks_on_day_id", using: :btree
   end
-
-  add_index "tasks", ["day_id"], name: "index_tasks_on_day_id", using: :btree
 
 end
