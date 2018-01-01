@@ -1,4 +1,4 @@
-class RenameTaskEventToDescription < ActiveRecord::Migration[4.1]
+class RenameTaskEventToDescription < ActiveRecord::Migration[4.2]
   def change
     rename_column :tasks, :event, :description
   end

@@ -1,4 +1,4 @@
-class AddDayIdToItems < ActiveRecord::Migration[4.1]
+class AddDayIdToItems < ActiveRecord::Migration[4.2]
   def change
     add_reference :items, :day, index: true
   end
