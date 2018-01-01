@@ -1,4 +1,4 @@
-class CreateRecurringTasks < ActiveRecord::Migration
+class CreateRecurringTasks < ActiveRecord::Migration[4.1]
   def change
     create_table :recurring_tasks do |t|
       t.integer :day

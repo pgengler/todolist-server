@@ -1,4 +1,4 @@
-class CreateItems < ActiveRecord::Migration
+class CreateItems < ActiveRecord::Migration[4.1]
   def change
     create_table :items do |t|
       t.date :date
