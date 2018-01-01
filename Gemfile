@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.1'
+gem 'rails', '5.1.4'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'spring',        group: :development
