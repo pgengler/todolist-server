@@ -15,49 +15,49 @@ ActiveRecord::Schema.define(version: 20171230163308) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "days", force: :cascade do |t|
-    t.date     "date"
+  create_table "days", id: :serial, force: :cascade do |t|
+    t.date "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "lists", force: :cascade do |t|
-    t.string   "name"
-    t.string   "list_type"
+  create_table "lists", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "list_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "recurring_tasks", id: :serial, force: :cascade do |t|
+    t.integer "day"
+    t.string "description", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "recurring_tasks", force: :cascade do |t|
-    t.integer  "day"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "tags", force: :cascade do |t|
-    t.string   "name"
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tags_tasks", id: false, force: :cascade do |t|
     t.integer "task_id", null: false
-    t.integer "tag_id",  null: false
-    t.index ["task_id"], name: "index_tags_tasks_on_task_id", using: :btree
+    t.integer "tag_id", null: false
+    t.index ["task_id"], name: "index_tags_tasks_on_task_id"
   end
 
-  create_table "tasks", force: :cascade do |t|
-    t.date     "date"
-    t.text     "description"
-    t.boolean  "done"
-    t.boolean  "deleted"
+  create_table "tasks", id: :serial, force: :cascade do |t|
+    t.date "date"
+    t.text "description"
+    t.boolean "done"
+    t.boolean "deleted"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "day_id"
-    t.integer  "list_id"
-    t.index ["day_id"], name: "index_tasks_on_day_id", using: :btree
-    t.index ["list_id"], name: "index_tasks_on_list_id", using: :btree
+    t.integer "day_id"
+    t.integer "list_id"
+    t.index ["day_id"], name: "index_tasks_on_day_id"
+    t.index ["list_id"], name: "index_tasks_on_list_id"
   end
 
   add_foreign_key "tasks", "lists"
