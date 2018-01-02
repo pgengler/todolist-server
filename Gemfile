@@ -20,5 +20,5 @@ group :development do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano3-puma'
-  gem 'pry'
+  gem 'listen'
 end
