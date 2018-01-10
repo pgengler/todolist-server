@@ -17,7 +17,7 @@ class List < ApplicationRecord
     recurring_task_list = List.find_by(name: date.strftime('%A'), list_type: 'recurring-task-day')
     return if recurring_task_list.nil?
     recurring_task_list.tasks.each do |recurring_task|
-      tasks.create(description: recurring_task.description)
+      tasks.create!(description: recurring_task.description)
     end
 
   end

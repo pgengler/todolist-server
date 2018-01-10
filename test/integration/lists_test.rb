@@ -3,6 +3,19 @@ require 'helpers/integration_test_helpers'
 
 class ListsTest < ActionDispatch::IntegrationTest
   include IntegrationTestHelpers
+  include Devise::Test::IntegrationHelpers
+
+  setup do
+    @user = create(:user, email: 'foo@example.com', password: 'barbaz')
+  end
+
+  test "returns HTTP 401 when not authorized" do
+    create(:list, name: '2018-01-07', list_type: 'day')
+
+    json_api_get '/api/v2/lists?filter[date][]=2018-01-07'
+
+    assert_response :unauthorized
+  end
 
   test "filters by date" do
     create(:list, name: '2017-12-26', list_type: 'day')
@@ -10,6 +23,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     create(:list, name: '2017-12-28', list_type: 'day')
     create(:list, name: 'Other', list_type: 'list')
 
+    login(@user)
     json_api_get '/api/v2/lists?filter[date][]=2017-12-26&filter[date][]=2017-12-27'
 
     assert_response :success
@@ -23,6 +37,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     create(:list, name: '2017-12-28', list_type: 'day')
     create(:list, name: 'Other', list_type: 'list')
 
+    login(@user)
     json_api_get '/api/v2/lists?filter[list-type]=list'
 
     assert_response :success
@@ -33,6 +48,7 @@ class ListsTest < ActionDispatch::IntegrationTest
   test "creates days that are requested but don't exist" do
     create(:list, name: '2017-12-26')
 
+    login(@user)
     json_api_get '/api/v2/lists?filter[date][]=2017-12-26&filter[date][]=2017-12-27'
 
     body = JSON.parse(response.body)
@@ -44,6 +60,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     recurring_task_list = create(:list, name: 'Monday', list_type: 'recurring-task-day')
     create_list(:task, 6, list_id: recurring_task_list.id)
 
+    login(@user)
     json_api_get "/api/v2/lists?filter[date][]=#{next_monday}&include=tasks"
 
     body = JSON.parse(response.body)

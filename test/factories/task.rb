@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :task do
     description 'a thing to do'
     done false
-    day
+    list
   end
 end

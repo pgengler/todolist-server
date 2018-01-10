@@ -7,6 +7,9 @@ gem 'spring',        group: :development
 
 gem 'jsonapi-resources'
 
+gem 'devise'
+gem 'doorkeeper'
+
 gem 'dotenv-rails'
 gem 'puma'
 

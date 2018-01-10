@@ -23,5 +23,11 @@ module IntegrationTestHelpers
     args[:headers] ||= { }
     args[:headers]['Content-Type'] ||= 'application/vnd.api+json'
     args[:headers]['Accept'] ||= 'application/vnd.api+json'
+    args[:headers]['Authorization'] ||= "Bearer #{@access_token}" if @access_token
+  end
+
+  def login(user)
+    post '/api/oauth/token', params: { grant_type: 'password', username: user.email, password: user.password }
+    @access_token = JSON.parse(response.body)['access_token']
   end
 end
