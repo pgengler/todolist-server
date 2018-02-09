@@ -1,5 +1,5 @@
 class ListResource < JSONAPI::Resource
-  attributes :name, :list_type
+  attributes :name, :list_type, :sort_order
 
   has_many :tasks
 
