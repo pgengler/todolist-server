@@ -7,7 +7,7 @@ gem 'spring',        group: :development
 
 gem 'jsonapi-resources'
 
-gem 'devise'
+gem 'devise', '~> 4.6.0'
 gem 'doorkeeper'
 
 gem 'dotenv-rails'
