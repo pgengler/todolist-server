@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2.0'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'spring',        group: :development
@@ -12,6 +12,8 @@ gem 'doorkeeper'
 
 gem 'dotenv-rails'
 gem 'puma'
+
+gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   gem 'factory_bot_rails'
