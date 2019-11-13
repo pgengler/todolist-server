@@ -71,13 +71,13 @@ ActiveRecord::Schema.define(version: 20180209124022) do
 
   create_table "recurring_tasks", id: :serial, force: :cascade do |t|
     t.integer "day"
-    t.string "description", limit: 255
+    t.string "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tags", id: :serial, force: :cascade do |t|
-    t.string "name", limit: 255
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
