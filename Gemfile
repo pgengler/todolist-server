@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.1'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'spring',        group: :development
@@ -20,7 +20,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '~> 3.7.0'
+  gem 'capistrano', '~> 3.11.0'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
