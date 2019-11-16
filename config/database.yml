@@ -1,9 +1,7 @@
 default: &default
   adapter: postgresql
-  host: localhost
   encoding: unicode
-  pool: 5
-  timeout: 5000
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
@@ -21,4 +19,3 @@ production:
   database: todolist_production
   username: todolist
   password: <%= ENV['TODOLIST_DATABASE_PASSWORD'] %>
-
