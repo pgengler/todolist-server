@@ -5,7 +5,7 @@ ruby '2.6.5'
 
 gem 'rails', '~> 6.0.3.6'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 4.3.9'
+gem 'puma', '~> 4.3.11'
 
 gem 'jsonapi-resources'
 
