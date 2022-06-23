@@ -6,6 +6,10 @@ class List < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: :list_type }
   validates :list_type, presence: true
 
+  def self.active
+    where(deleted: false)
+  end
+
   private
 
   def populate_recurring_tasks
@@ -19,6 +23,5 @@ class List < ApplicationRecord
     recurring_task_list.tasks.each do |recurring_task|
       tasks.create!(description: recurring_task.description)
     end
-
   end
 end
