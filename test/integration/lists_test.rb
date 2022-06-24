@@ -67,4 +67,66 @@ class ListsTest < ActionDispatch::IntegrationTest
     tasks = body['included'].select { |item| item['type'] == 'tasks' }
     assert_equal 6, tasks.length
   end
+
+  test "trying to DELETE an empty 'list' list soft-deletes the list" do
+    list = create(:list, list_type: 'list')
+
+    login @user
+    assert_equal list.deleted, false
+    assert_no_difference 'List.count' do
+      json_api_delete "/api/v2/lists/#{list.id}"
+    end
+    assert_response :success
+    list.reload
+    assert_equal true, list.deleted
+  end
+
+  test "trying to DELETE a non-empty 'list' list is an error" do
+    list = create(:list, list_type: 'list')
+    create_list :task, 10, list: list
+    login @user
+
+    assert_no_difference 'List.count' do
+      json_api_delete "/api/v2/lists/#{list.id}"
+    end
+    assert_response :unprocessable_entity
+    list.reload
+    assert_equal false, list.deleted
+  end
+
+  test "trying to DELETE a 'day' list is an error" do
+    list = create(:list, name: '2022-06-12', list_type: 'day')
+    login @user
+
+    assert_no_difference 'List.count' do
+      json_api_delete "/api/v2/lists/#{list.id}"
+    end
+    assert_response :unprocessable_entity
+    list.reload
+    assert_equal false, list.deleted
+  end
+
+  test "trying to DELETE a 'recurring-task-day' list is an error" do
+    list = create(:list, list_type: 'recurring-task-day')
+    login @user
+
+    assert_no_difference 'List.count' do
+      json_api_delete "/api/v2/lists/#{list.id}"
+    end
+    assert_response :unprocessable_entity
+    list.reload
+    assert_equal false, list.deleted
+  end
+
+  test "deleted lists are not returned in index response" do
+    create :list, name: 'Active List', list_type: 'list'
+    create :list, name: 'Deleted List', list_type: 'list', deleted: true
+    login @user
+
+    json_api_get '/api/v2/lists?filter[list-type]=list'
+    assert_response :success
+    body = JSON.parse(response.body)
+    assert_equal 1, body['data'].length
+    assert_equal 'Active List', body['data'][0]['attributes']['name']
+  end
 end

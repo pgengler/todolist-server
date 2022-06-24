@@ -3,6 +3,10 @@ class ListResource < JSONAPI::Resource
 
   has_many :tasks
 
+  def self.records(options = {})
+    List.active
+  end
+
   filter :list_type
   filter :name
   filter :date,
