@@ -9,9 +9,9 @@ class ListTest < ActiveSupport::TestCase
   end
 
   test "name need not be unique across list_types" do
-    create(:list, name: 'foo', list_type: 'list')
+    create(:list, name: 'Monday', list_type: 'list')
     assert_nothing_raised do
-      List.create!(name: 'foo', list_type: 'other')
+      List.create!(name: 'Monday', list_type: 'recurring-task-day')
     end
   end
 
@@ -24,6 +24,12 @@ class ListTest < ActiveSupport::TestCase
   test "list_type is a required attribute" do
     assert_raises ActiveRecord::RecordInvalid do
       List.create!(name: 'new list', list_type: nil)
+    end
+  end
+
+  test "lists cannot be created with invalid list types" do
+    assert_raises ActiveRecord::RecordInvalid do
+      List.create!(name: 'new list', list_type: 'foobar')
     end
   end
 

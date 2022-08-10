@@ -9,7 +9,7 @@ class TasksTest < ActionDispatch::IntegrationTest
   end
 
   test "requires auth to create a task" do
-    list = create(:list)
+    list = create(:list, list_type: 'list')
 
     params = {
       data: {

@@ -46,7 +46,7 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "creates days that are requested but don't exist" do
-    create(:list, name: '2017-12-26')
+    create(:list, list_type: 'day', name: '2017-12-26')
 
     login(@user)
     json_api_get '/api/v2/lists?filter[date][]=2017-12-26&filter[date][]=2017-12-27'
