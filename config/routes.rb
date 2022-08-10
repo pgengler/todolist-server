@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     use_doorkeeper
 
     scope 'v2' do
-      jsonapi_resources :lists, only: [ :index, :destroy ]
+      jsonapi_resources :lists, only: [ :create, :destroy, :index ]
       jsonapi_resources :tasks
     end
   end
