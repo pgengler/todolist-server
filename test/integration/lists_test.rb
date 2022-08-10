@@ -129,4 +129,80 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_equal 1, body['data'].length
     assert_equal 'Active List', body['data'][0]['attributes']['name']
   end
+
+  test "trying to create a new 'day'-type list via POST fails" do
+    login @user
+
+    params = {
+      data: {
+        attributes: {
+          name: '2022-08-10',
+          'list-type': 'day'
+        },
+        type: 'lists'
+      }
+    }
+
+    assert_no_difference 'List.count' do
+      json_api_post '/api/v2/lists', params: params.to_json
+    end
+    assert_response :bad_request
+  end
+
+  test "trying to create a new 'recurring-task-day' list via POST fails" do
+    login @user
+
+    params = {
+      data: {
+        attributes: {
+          name: '2022-08-10',
+          'list-type': 'recurring-task-day'
+        },
+        type: 'lists'
+      }
+    }
+
+    assert_no_difference 'List.count' do
+      json_api_post '/api/v2/lists', params: params.to_json
+    end
+    assert_response :bad_request
+  end
+
+  test "trying to create a new list with an unknown type via POST fails" do
+    login @user
+
+    params = {
+      data: {
+        attributes: {
+          name: '2022-08-10',
+          'list-type': 'foobar'
+        },
+        type: 'lists'
+      }
+    }
+
+    assert_no_difference 'List.count' do
+      json_api_post '/api/v2/lists', params: params.to_json
+    end
+    assert_response :bad_request
+  end
+
+  test "can create a new 'list'-type list via POST" do
+    login @user
+
+    params = {
+      data: {
+        attributes: {
+          name: '2022-08-10',
+          'list-type': 'list'
+        },
+        type: 'lists'
+      }
+    }
+
+    assert_difference 'List.count', 1 do
+      json_api_post '/api/v2/lists', params: params.to_json
+    end
+    assert_response :created
+  end
 end
