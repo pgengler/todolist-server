@@ -1,10 +1,12 @@
+VALID_LIST_TYPES = ['day', 'list', 'recurring-task-day']
+
 class List < ApplicationRecord
   after_create :populate_recurring_tasks
 
   has_many :tasks, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { scope: :list_type }
-  validates :list_type, presence: true
+  validates :list_type, inclusion: { in: VALID_LIST_TYPES }
 
   def self.active
     where(deleted: false)
