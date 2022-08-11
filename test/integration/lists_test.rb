@@ -146,7 +146,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :bad_request
+    assert_response :unprocessable_entity
   end
 
   test "trying to create a new 'recurring-task-day' list via POST fails" do
@@ -165,7 +165,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :bad_request
+    assert_response :unprocessable_entity
   end
 
   test "trying to create a new list with an unknown type via POST fails" do
@@ -184,7 +184,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :bad_request
+    assert_response :unprocessable_entity
   end
 
   test "can create a new 'list'-type list via POST" do
@@ -204,5 +204,89 @@ class ListsTest < ActionDispatch::IntegrationTest
       json_api_post '/api/v2/lists', params: params.to_json
     end
     assert_response :created
+  end
+
+  test "cannot edit a 'day'-type list via PATCH" do
+    login @user
+
+    list = create(:list, :day)
+
+    params = {
+      data: {
+        attributes: {
+          name: 'foobar',
+          'list-type': 'day',
+        },
+        id: list.id,
+        type: 'lists'
+      }
+    }
+
+    json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
+    assert_response :unprocessable_entity
+  end
+
+  test "cannot edit a 'recurring-task-day'-type list via PATCH" do
+    login @user
+
+    list = create(:list, list_type: 'recurring-task-day')
+
+    params = {
+      data: {
+        attributes: {
+          name: 'foobar',
+          'list-type': 'recurring-task-day',
+        },
+        id: list.id,
+        type: 'lists'
+      }
+    }
+
+    json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
+    assert_response :unprocessable_entity
+  end
+
+  test "cannot change list_type of a 'list'-type list via PATCH" do
+    login @user
+
+    list = create(:list, name: 'foobar')
+
+    params = {
+      data: {
+        attributes: {
+          name: 'foobar',
+          'list-type': 'day',
+        },
+        id: list.id,
+        type: 'lists'
+      }
+    }
+
+    json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
+
+    assert_response :unprocessable_entity
+  end
+
+  test "can change the name of a 'list'-type list via PATCH" do
+    login @user
+
+    list = create(:list, name: 'foobar')
+
+    params = {
+      data: {
+        attributes: {
+          name: 'baz',
+          'list-type': 'list',
+        },
+        id: list.id,
+        type: 'lists'
+      }
+    }
+
+    json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
+    assert_response :success
+
+    list.reload
+    assert_equal 'baz', list.name
   end
 end
