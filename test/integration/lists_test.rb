@@ -10,7 +10,7 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "returns HTTP 401 when not authorized" do
-    create(:list, name: '2018-01-07', list_type: 'day')
+    create(:list, :day, name: '2018-01-07')
 
     json_api_get '/api/v2/lists?filter[date][]=2018-01-07'
 
@@ -18,9 +18,9 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "filters by date" do
-    create(:list, name: '2017-12-26', list_type: 'day')
-    create(:list, name: '2017-12-27', list_type: 'day')
-    create(:list, name: '2017-12-28', list_type: 'day')
+    create(:list, :day, name: '2017-12-26')
+    create(:list, :day, name: '2017-12-27')
+    create(:list, :day, name: '2017-12-28')
     create(:list, name: 'Other', list_type: 'list')
 
     login(@user)
@@ -32,9 +32,9 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "filters by list type" do
-    create(:list, name: '2017-12-26', list_type: 'day')
-    create(:list, name: '2017-12-27', list_type: 'day')
-    create(:list, name: '2017-12-28', list_type: 'day')
+    create(:list, :day, name: '2017-12-26')
+    create(:list, :day, name: '2017-12-27')
+    create(:list, :day, name: '2017-12-28')
     create(:list, name: 'Other', list_type: 'list')
 
     login(@user)
@@ -46,7 +46,7 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "creates days that are requested but don't exist" do
-    create(:list, list_type: 'day', name: '2017-12-26')
+    create(:list, :day, name: '2017-12-26')
 
     login(@user)
     json_api_get '/api/v2/lists?filter[date][]=2017-12-26&filter[date][]=2017-12-27'
@@ -57,7 +57,7 @@ class ListsTest < ActionDispatch::IntegrationTest
 
   test "populates newly-created days with the recurring tasks for that day" do
     next_monday = DateTime.now.next_week.next_day(0).strftime('%Y-%m-%d')
-    recurring_task_list = create(:list, name: 'Monday', list_type: 'recurring-task-day')
+    recurring_task_list = create(:list, :recurring_task_day, name: 'Monday')
     create_list(:task, 6, list_id: recurring_task_list.id)
 
     login(@user)
@@ -73,10 +73,10 @@ class ListsTest < ActionDispatch::IntegrationTest
 
     login @user
     assert_equal list.deleted, false
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
-    assert_response :success
+    assert_response :no_content
     list.reload
     assert_equal true, list.deleted
   end
@@ -86,7 +86,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     create_list :task, 10, list: list
     login @user
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
     assert_response :unprocessable_entity
@@ -95,10 +95,10 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "trying to DELETE a 'day' list is an error" do
-    list = create(:list, name: '2022-06-12', list_type: 'day')
+    list = create(:list, :day, name: '2022-06-12')
     login @user
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
     assert_response :unprocessable_entity
@@ -107,10 +107,10 @@ class ListsTest < ActionDispatch::IntegrationTest
   end
 
   test "trying to DELETE a 'recurring-task-day' list is an error" do
-    list = create(:list, list_type: 'recurring-task-day')
+    list = create(:list, :recurring_task_day)
     login @user
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
     assert_response :unprocessable_entity
@@ -120,7 +120,8 @@ class ListsTest < ActionDispatch::IntegrationTest
 
   test "deleted lists are not returned in index response" do
     create :list, name: 'Active List', list_type: 'list'
-    create :list, name: 'Deleted List', list_type: 'list', deleted: true
+    deleted_list = create(:list, name: 'Deleted List', list_type: 'list')
+    deleted_list.destroy!
     login @user
 
     json_api_get '/api/v2/lists?filter[list-type]=list'
@@ -143,7 +144,7 @@ class ListsTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
     assert_response :unprocessable_entity
@@ -162,7 +163,7 @@ class ListsTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
     assert_response :unprocessable_entity
@@ -181,7 +182,7 @@ class ListsTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_no_difference 'List.count' do
+    assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
     assert_response :unprocessable_entity
@@ -229,7 +230,7 @@ class ListsTest < ActionDispatch::IntegrationTest
   test "cannot edit a 'recurring-task-day'-type list via PATCH" do
     login @user
 
-    list = create(:list, list_type: 'recurring-task-day')
+    list = create(:list, :recurring_task_day)
 
     params = {
       data: {
