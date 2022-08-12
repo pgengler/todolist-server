@@ -38,7 +38,7 @@ class TasksTest < ActionDispatch::IntegrationTest
   test "filters by overdue tasks" do
     last_week = 1.week.ago
 
-    last_week_list = create(:list, list_type: 'day', name: last_week.strftime('%Y-%m-%d'))
+    last_week_list = create(:list, :day, name: last_week.strftime('%Y-%m-%d'))
     create_list(:task, 5, done: false, list: last_week_list)
     create_list(:task, 6, done: true, list: last_week_list)
 
