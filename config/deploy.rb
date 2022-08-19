@@ -3,6 +3,7 @@ lock '3.14.1'
 
 set :application, 'todolist-server'
 set :repo_url, 'https://github.com/pgengler/todolist-server.git'
+set :branch, 'main'
 
 set :deploy_to, '/srv/apps/todolist/server'
 
