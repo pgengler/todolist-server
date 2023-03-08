@@ -1,5 +1,5 @@
 class TaskResource < JSONAPI::Resource
-  attributes :description, :done
+  attributes :description, :done, :notes
 
   has_one :list
 
