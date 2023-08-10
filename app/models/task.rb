@@ -6,4 +6,12 @@ class Task < ApplicationRecord
   validates :description, presence: true
 
   scope :overdue, -> { joins(:list).where(done: false).where("lists.list_type = 'day' and to_date(lists.name, 'YYYY-MM-DD') < to_date(to_char(now(), 'YYYY-MM-DD'), 'YYYY-MM-DD')") }
+
+  def self.by_list_name
+    joins(:list).order('lists.name')
+  end
+
+  def self.by_plaintext_description
+    order(Arel.sql("REGEXP_REPLACE(description, '[^A-Za-z0-9]', '', 'g')"))
+  end
 end
