@@ -14,14 +14,4 @@ class Task < ApplicationRecord
   def self.by_plaintext_description
     order(Arel.sql("REGEXP_REPLACE(description, '[^A-Za-z0-9]', '', 'g')"))
   end
-
-  def due_date
-    return nil unless list? && list.list_type == 'day'
-
-    list.name
-  end
-
-  def plaintext_description
-    description.gsub /[^A-Za-z0-9]/, ''
-  end
 end
