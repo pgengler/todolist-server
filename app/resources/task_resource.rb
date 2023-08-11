@@ -1,5 +1,5 @@
 class TaskResource < JSONAPI::Resource
-  attributes :description, :done, :notes
+  attributes :description, :done, :due_date, :notes
 
   def self.sortable_fields(context)
     super(context) + [:due_date, :plaintext_description]
