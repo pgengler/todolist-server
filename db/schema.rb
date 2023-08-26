@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_26_120200) do
+ActiveRecord::Schema.define(version: 2023_08_26_022551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 2023_08_26_120200) do
     t.datetime "updated_at", null: false
     t.integer "sort_order"
     t.boolean "deleted", default: false
-    t.index ["name", "list_type"], name: "index_lists_on_name_and_list_type", unique: true
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
