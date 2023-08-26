@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_08_123412) do
+ActiveRecord::Schema.define(version: 2023_08_26_022551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,7 +92,7 @@ ActiveRecord::Schema.define(version: 2023_03_08_123412) do
   create_table "tasks", id: :serial, force: :cascade do |t|
     t.date "date"
     t.text "description"
-    t.boolean "done"
+    t.boolean "done", default: false, null: false
     t.boolean "deleted"
     t.datetime "created_at"
     t.datetime "updated_at"
