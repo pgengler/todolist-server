@@ -92,4 +92,26 @@ class TasksTest < ActionDispatch::IntegrationTest
     assert_equal data[1]['attributes']['description'], 'baz'
     assert_equal data[2]['attributes']['description'], '**foo**'
   end
+
+  test 'can filter by tasks due before a given date' do
+    last_week = 1.week.ago
+    today = DateTime.now
+
+    last_week_list = create(:list, :day, name: last_week.strftime('%Y-%m-%d'))
+    unfinished_overdue_tasks = create_list(:task, 5, done: false, list: last_week_list)
+    create_list(:task, 6, done: true, list: last_week_list)
+
+    today_list = create(:list, :day, name: today.strftime('%Y-%m-%d'))
+    create_list(:task, 4, done: false, list: today_list)
+
+    login(@user)
+    json_api_get "/api/v2/tasks?filter[due_before]=#{today.strftime('%Y-%m-%d')}"
+    assert_response :success
+
+    body = JSON.parse(response.body)
+
+    assert_equal body['data'].length, 5
+    ids = body['data'].map { |item| item['id'].to_i }
+    assert_equal ids, unfinished_overdue_tasks.map(&:id)
+  end
 end
