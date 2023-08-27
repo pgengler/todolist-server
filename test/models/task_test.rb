@@ -34,4 +34,26 @@ class TaskTest < ActiveSupport::TestCase
 
     assert_equal Task.overdue, overdue_tasks
   end
+
+  test '.due_before returns list of unfinished tasks on a "day" list with a date before the given one' do
+    past_lists = [
+      create(:list, name: 1.month.ago, list_type: :day),
+      create(:list, name: 2.weeks.ago, list_type: :day),
+      create(:list, name: 3.days.ago, list_type: :day)
+    ]
+    other_lists = [
+      create(:list, name: Time.current, list_type: :day),
+      create(:list, name: 1.day.from_now, list_type: :day),
+      create(:list, name: 1.month.from_now, list_type: :day)
+    ]
+
+    overdue_tasks = past_lists.map { |l| create(:task, list: l, done: false) }
+    past_lists.each { |l| create(:task, list: l, done: true )}
+    other_lists.each do |l|
+      create(:task, list: l, done: false)
+      create(:task, list: l, done: true)
+    end
+
+    assert_equal Task.due_before(Time.current), overdue_tasks
+  end
 end

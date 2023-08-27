@@ -19,4 +19,8 @@ class Task < ApplicationRecord
   def self.by_plaintext_description
     order(Arel.sql("REGEXP_REPLACE(description, '[^A-Za-z0-9]', '', 'g')"))
   end
+
+  def self.due_before(date)
+    joins(:list).where(done: false).where("lists.list_type = 'day' and to_date(lists.name, 'YYYY-MM-DD') < to_date(?, 'YYYY-MM-DD')", date)
+  end
 end

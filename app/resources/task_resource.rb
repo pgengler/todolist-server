@@ -12,6 +12,11 @@ class TaskResource < JSONAPI::Resource
       records.overdue
     }
 
+  filter :due_before,
+    apply: ->(records, values, _options) {
+      records.due_before(values[0])
+    }
+
   def self.apply_sort(records, order_options, options)
     if order_options.any?
       order_options.each_pair do |field, direction|
