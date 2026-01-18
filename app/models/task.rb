@@ -8,7 +8,7 @@ class Task < ApplicationRecord
   scope :overdue, -> { joins(:list).where(done: false).where("lists.list_type = 'day' and to_date(lists.name, 'YYYY-MM-DD') < to_date(to_char(now(), 'YYYY-MM-DD'), 'YYYY-MM-DD')") }
 
   def due_date
-    nil unless list.list_type == 'day'
+    return nil unless list.list_type == 'day'
     list.name
   end
 
