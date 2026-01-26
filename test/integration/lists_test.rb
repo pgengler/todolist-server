@@ -57,14 +57,16 @@ class ListsTest < ActionDispatch::IntegrationTest
 
   test "populates newly-created days with the recurring tasks for that day" do
     next_monday = DateTime.now.next_week.next_day(0).strftime('%Y-%m-%d')
-    recurring_task_list = create(:list, :recurring_task_day, name: 'Monday')
-    create_list(:task, 6, list_id: recurring_task_list.id)
+    # Create 6 recurrence rules that apply on Mondays (day_of_week: 1)
+    6.times do |i|
+      create(:recurrence_rule, description: "Recurring task #{i}", recurrence_type: 'weekly', day_of_week: 1, start_date: Date.today)
+    end
 
     login(@user)
     json_api_get "/api/v2/lists?filter[date][]=#{next_monday}&include=tasks"
 
     body = JSON.parse(response.body)
-    tasks = body['included'].select { |item| item['type'] == 'tasks' }
+    tasks = body['included']&.select { |item| item['type'] == 'tasks' } || []
     assert_equal 6, tasks.length
   end
 
