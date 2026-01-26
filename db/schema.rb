@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_26_120200) do
+ActiveRecord::Schema.define(version: 2026_01_25_154231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,26 @@ ActiveRecord::Schema.define(version: 2023_08_26_120200) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "recurrence_rules", force: :cascade do |t|
+    t.string "description", null: false
+    t.text "notes"
+    t.string "recurrence_type", null: false
+    t.integer "interval", default: 1
+    t.integer "day_of_week"
+    t.integer "days_of_week", default: [], array: true
+    t.integer "day_of_month"
+    t.integer "week_of_month"
+    t.integer "month"
+    t.date "anchor_date"
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "max_instances"
+    t.integer "instances_created", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recurrence_type"], name: "index_recurrence_rules_on_recurrence_type"
+  end
+
   create_table "recurring_tasks", id: :serial, force: :cascade do |t|
     t.integer "day"
     t.string "description"
@@ -100,8 +120,14 @@ ActiveRecord::Schema.define(version: 2023_08_26_120200) do
     t.integer "day_id"
     t.integer "list_id"
     t.text "notes"
+    t.bigint "recurrence_rule_id"
+    t.date "original_date"
+    t.boolean "instance_modified", default: false
+    t.boolean "skipped", default: false
     t.index ["day_id"], name: "index_tasks_on_day_id"
     t.index ["list_id"], name: "index_tasks_on_list_id"
+    t.index ["recurrence_rule_id", "original_date"], name: "index_tasks_on_recurrence_rule_id_and_original_date", unique: true, where: "(recurrence_rule_id IS NOT NULL)"
+    t.index ["recurrence_rule_id"], name: "index_tasks_on_recurrence_rule_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -124,4 +150,5 @@ ActiveRecord::Schema.define(version: 2023_08_26_120200) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "tasks", "lists"
+  add_foreign_key "tasks", "recurrence_rules"
 end
