@@ -1,11 +1,17 @@
 class TaskResource < JSONAPI::Resource
-  attributes :description, :done, :due_date, :notes
+  attributes :description, :done, :due_date, :notes,
+             :original_date, :instance_modified, :skipped, :recurring
 
   def self.sortable_fields(context)
     super(context) + [:due_date, :plaintext_description]
   end
 
+  def recurring
+    @model.recurring?
+  end
+
   has_one :list
+  has_one :recurrence_rule
 
   filter :overdue,
     apply: ->(records, values, _options) {
