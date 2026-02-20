@@ -27,6 +27,35 @@ class List < ApplicationRecord
     date = Date.parse(name)
     return if date.nil?
     return if date < Date.today
+
+    # First, handle new flexible recurring tasks (v3)
+    populate_flexible_recurring_tasks(date)
+
+    # Then, handle legacy weekly recurring tasks (v2) for backward compatibility
+    populate_legacy_recurring_tasks(date)
+  end
+
+  def populate_flexible_recurring_tasks(date)
+    # Find all active recurring task templates that should create tasks for this date
+    RecurringTaskTemplate.active.includes(:recurring_task_overrides).find_each do |template|
+      next unless template.occurs_on?(date)
+      next if template.has_override_for?(date, 'deleted')
+
+      # Check if instance already exists (idempotency)
+      instance = RecurringTaskInstance.find_or_create_by(
+        recurring_task_template: template,
+        scheduled_date: date
+      ) do |inst|
+        inst.status = 'pending'
+      end
+
+      # Create the actual task if instance is pending
+      instance.create_task_for_list(self) if instance.pending?
+    end
+  end
+
+  def populate_legacy_recurring_tasks(date)
+    # Keep existing logic for backward compatibility
     recurring_task_list = List.unscoped.find_by(name: date.strftime('%A'), list_type: 'recurring-task-day')
     return if recurring_task_list.nil?
     recurring_task_list.tasks.each do |recurring_task|
