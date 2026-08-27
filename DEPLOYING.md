@@ -7,13 +7,13 @@ This document covers how to deploy the todolist server application using Kamal 2
 ```
 Internet → nginx (SSL termination) → kamal-proxy (port 8081) → Rails container (Thruster + Puma)
                                                                         ↓
-                                                              PostgreSQL 16 (port 5435)
+                                            PostgreSQL 16 (Docker container postgres16, host port 5435)
 ```
 
 - **nginx** handles SSL termination and proxies HTTP to kamal-proxy on port 8081.
 - **kamal-proxy** manages zero-downtime deploys and routes traffic to the Rails container.
 - **Thruster** sits inside the container in front of Puma, providing X-Sendfile acceleration and asset caching.
-- **PostgreSQL 16** runs on port 5435 on the same server.
+- **PostgreSQL 16** runs in the `postgres16` Docker container (image `postgres:16-alpine`), exposed on host port `5435` (mapped to the container's port `5432`). The container is shared with other apps on the server; the `todolist` role and `todolist_production` database live alongside the other apps' databases inside it.
 
 ## Prerequisites
 
@@ -96,6 +96,7 @@ bundle exec kamal setup
 ```
 
 `kamal setup` will:
+
 1. Install Docker on the server if not already present.
 2. Boot kamal-proxy (if not already running).
 3. Build the Docker image locally and push it to ghcr.io.
@@ -152,27 +153,27 @@ bundle exec kamal app remove
 
 Secrets are managed via `.kamal/secrets`, which contains references (safe to commit). The actual values are resolved from environment variables on the deploying machine:
 
-| Secret | Description |
-|--------|-------------|
-| `KAMAL_REGISTRY_PASSWORD` | GitHub Container Registry access token |
-| `RAILS_MASTER_KEY` | Contents of `config/master.key` (auto-resolved from the file) |
-| `DB_PASSWORD` | PostgreSQL password for the `todolist` user |
+| Secret                    | Description                                                   |
+| ------------------------- | ------------------------------------------------------------- |
+| `KAMAL_REGISTRY_PASSWORD` | GitHub Container Registry access token                        |
+| `RAILS_MASTER_KEY`        | Contents of `config/master.key` (auto-resolved from the file) |
+| `DB_PASSWORD`             | PostgreSQL password for the `todolist` user                   |
 
 ## Environment Variables
 
 The following environment variables are injected into the container (defined in `config/deploy.yml`):
 
-| Variable | Value | Description |
-|----------|-------|-------------|
-| `RAILS_LOG_TO_STDOUT` | `1` | Send logs to stdout for Docker log collection |
-| `DB_HOST` | `127.0.0.1` | PostgreSQL host |
-| `DB_PORT` | `5435` | PostgreSQL 16 port |
-| `RAILS_MASTER_KEY` | (secret) | Decrypts `config/credentials.yml.enc` |
-| `DB_PASSWORD` | (secret) | PostgreSQL password |
+| Variable              | Value       | Description                                   |
+| --------------------- | ----------- | --------------------------------------------- |
+| `RAILS_LOG_TO_STDOUT` | `1`         | Send logs to stdout for Docker log collection |
+| `DB_HOST`             | `127.0.0.1` | PostgreSQL host                               |
+| `DB_PORT`             | `5435`      | PostgreSQL 16 port                            |
+| `RAILS_MASTER_KEY`    | (secret)    | Decrypts `config/credentials.yml.enc`         |
+| `DB_PASSWORD`         | (secret)    | PostgreSQL password                           |
 
 ## Database
 
-The app connects to PostgreSQL 16 on port 5435. The database connection is configured in `config/database.yml` and uses the `DB_HOST`, `DB_PORT`, and `DB_PASSWORD` environment variables.
+The app connects to PostgreSQL 16 on host port `5435`. PostgreSQL 16 runs inside the `postgres16` Docker container (image `postgres:16-alpine`), which maps host port `5435` to its internal port `5432`. The container is shared with other apps on the server; the `todolist` role and `todolist_production` database live alongside the other apps' databases inside the same container. The database connection is configured in `config/database.yml` and uses the `DB_HOST`, `DB_PORT`, and `DB_PASSWORD` environment variables.
 
 See `MIGRATING_DATABASE.md` for instructions on migrating data from the old PostgreSQL 9.4 instance to the new PostgreSQL 16 instance.
 
@@ -181,18 +182,28 @@ See `MIGRATING_DATABASE.md` for instructions on migrating data from the old Post
 ### Container won't start
 
 Check the app logs:
+
 ```bash
 bundle exec kamal app logs
 ```
 
 Common issues:
+
 - Missing `RAILS_MASTER_KEY` — ensure `config/master.key` exists locally.
-- Database connection failure — verify PostgreSQL 16 is running on port 5435 and the `todolist` user has access.
+- Database connection failure — verify the `postgres16` container is running and the `todolist` database is reachable:
+  ```bash
+  bundle exec kamal app exec 'bin/rails db:migrate:status'  # exercises the DB connection from the app
+  # On the server:
+  docker ps -f name=postgres16
+  docker exec -i postgres16 pg_isready -U todolist -d todolist_production
+  ```
+  Note: the `postgres16` container's healthcheck targets the `readinglist` user/database (it is a shared container), so a healthy container does not by itself confirm the `todolist` database is reachable — verify todolist connectivity directly as shown above.
 - Port conflict — ensure kamal-proxy is running on port 8081 and nginx is proxying to it.
 
 ### Health check failing
 
 The health check hits `/up` on the container. If it fails, Kamal will not switch traffic to the new container. Check:
+
 ```bash
 bundle exec kamal app logs
 ```
@@ -202,6 +213,7 @@ The `/up` endpoint returns `{ "status": "ok" }` with a 200 status code.
 ### Proxy issues
 
 If kamal-proxy is not running or misconfigured:
+
 ```bash
 bundle exec kamal proxy logs
 bundle exec kamal proxy boot

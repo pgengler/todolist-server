@@ -32,6 +32,9 @@ proxy:
 env:
   clear:
     RAILS_LOG_TO_STDOUT: "1"
+    # PostgreSQL 16 runs in the `postgres16` Docker container (image postgres:16-alpine),
+    # which maps host port 5435 to the container's port 5432. The container is shared with
+    # other apps on the server; the `todolist` role/db live alongside them inside it.
     DB_HOST: 127.0.0.1
     DB_PORT: "5435"
   secret:
