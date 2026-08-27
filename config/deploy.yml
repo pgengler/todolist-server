@@ -1,0 +1,52 @@
+# Name of the application. Used to uniquely configure containers.
+service: todolist-server
+
+# Name of the container image (Kamal prepends the registry server URL).
+image: pgengler/todolist-server
+
+# Deploy to the same server, as user `apps`.
+servers:
+  web:
+    - hyperion.pgengler.net
+
+# SSH as the `apps` user (other apps on the server use this user with Kamal).
+ssh:
+  user: apps
+
+# Credentials for the image host.
+registry:
+  server: ghcr.io
+  username: pgengler
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# kamal-proxy is shared across apps on this server and runs on port 8081.
+# nginx handles SSL termination and proxies to kamal-proxy on port 8081.
+proxy:
+  ssl: false
+  forward_headers: true
+  run:
+    http_port: 8081
+
+# Inject ENV variables into containers (secrets come from .kamal/secrets).
+env:
+  clear:
+    RAILS_LOG_TO_STDOUT: "1"
+    DB_HOST: 127.0.0.1
+    DB_PORT: "5435"
+  secret:
+    - RAILS_MASTER_KEY
+    - DB_PASSWORD
+
+# Use a persistent storage volume for local Active Storage files.
+volumes:
+  - "todolist_server_storage:/rails/storage"
+
+# Bridge fingerprinted assets, like JS and CSS, between versions to avoid
+# hitting 404 on in-flight requests. Combines all files from new and old
+# version inside the asset_path.
+asset_path: /rails/public/assets
+
+# Configure builder setup.
+builder:
+  arch: amd64

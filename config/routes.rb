@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "up", to: "health#show"
+
   scope 'api' do
     devise_for :users
     use_doorkeeper

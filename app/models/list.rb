@@ -45,7 +45,7 @@ class List < ApplicationRecord
   end
 
   def validate_list_updatable
-    original_list_type = changed_attributes.has_key?(:list_type) ? changed_attributes[:list_type] : list_type
+    original_list_type = attribute_in_database(:list_type) || list_type
     unless UPDATABLE_LIST_TYPES.include?(original_list_type)
       errors.add :base, "Cannot update '#{original_list_type}' lists"
     end

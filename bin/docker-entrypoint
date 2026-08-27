@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# If running the rails server directly, prepare the database first
+if [ "$1" = "./bin/rails" ] && [ "$2" = "server" ] || [ "$1" = "bin/rails" ] && [ "$2" = "server" ]; then
+  ./bin/rails db:prepare
+fi
+
+exec "$@"

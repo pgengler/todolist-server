@@ -17,5 +17,7 @@ test:
 production:
   <<: *default
   database: todolist_production
+  host: <%= ENV.fetch("DB_HOST", "127.0.0.1") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
   username: todolist
-  password: <%= ENV['TODOLIST_DATABASE_PASSWORD'] %>
+  password: <%= ENV["DB_PASSWORD"] %>

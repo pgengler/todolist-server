@@ -17,3 +17,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore database migration guide (server-specific, not for commit).
+/MIGRATING_DATABASE.md
