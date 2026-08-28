@@ -23,6 +23,7 @@ registry:
 # kamal-proxy is shared across apps on this server and runs on port 8081.
 # nginx handles SSL termination and proxies to kamal-proxy on port 8081.
 proxy:
+  host: todolist.pgengler.net
   ssl: false
   forward_headers: true
   run:
