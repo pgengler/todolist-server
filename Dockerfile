@@ -38,11 +38,6 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile -j 1 app/ lib/
 
-# Adjust binfiles to be executable on Linux
-RUN chmod +x bin/* && \
-    sed -i 's/\r$//' bin/* && \
-    sed -i 's/\r$//' config/*.ru
-
 # Final stage for app image
 FROM base
 
