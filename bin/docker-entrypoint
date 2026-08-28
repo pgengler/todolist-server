@@ -1,7 +1,9 @@
 #!/bin/sh
 
-# If running the rails server directly, prepare the database first
-if [ "$1" = "./bin/rails" ] && [ "$2" = "server" ] || [ "$1" = "bin/rails" ] && [ "$2" = "server" ]; then
+# If running the rails server directly or via thruster, prepare the database first
+if { [ "$1" = "./bin/rails" ] || [ "$1" = "bin/rails" ]; } && [ "$2" = "server" ]; then
+  ./bin/rails db:prepare
+elif [ "$1" = "./bin/thrust" ] && { [ "$2" = "./bin/rails" ] || [ "$2" = "bin/rails" ]; } && [ "$3" = "server" ]; then
   ./bin/rails db:prepare
 fi
 
