@@ -37,8 +37,8 @@ env:
     # other apps on the server; the `todolist` role/db live alongside them inside it.
     # Use the Docker bridge gateway IP (172.17.0.1) to reach the host's published port
     # from inside the app container (127.0.0.1 would refer to the container itself).
-    DB_HOST: 172.17.0.1
-    DB_PORT: "5435"
+    DB_HOST: postgres16
+    DB_PORT: "5432"
   secret:
     - RAILS_MASTER_KEY
     - DB_PASSWORD
