@@ -11,7 +11,7 @@ class UncreatableListType < JSONAPI::Exceptions::Error
   def errors
     message = "'#{@list_type}' lists cannot be created"
     [create_error_object(code: JSONAPI::VALIDATION_ERROR,
-                        status: :unprocessable_entity,
+                        status: :unprocessable_content,
                         title: message,
                         detail: "list-type - #{message}",
                         source: { pointer: '/data/attributes/list-type' })]

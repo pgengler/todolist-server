@@ -1,3 +1,14 @@
+GIT
+  remote: https://github.com/speee/jsonapi-resources.git
+  revision: dacac2d7943e66de9af2c146fd8c4a2030465ae7
+  tag: v26.1.3
+  specs:
+    jsonapi-resources (26.1.3)
+      activerecord (>= 5.1)
+      concurrent-ruby
+      csv
+      railties (>= 5.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -119,10 +130,6 @@ GEM
       prism (>= 1.3.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
-    jsonapi-resources (0.10.7)
-      activerecord (>= 4.1)
-      concurrent-ruby
-      railties (>= 4.1)
     kamal (2.12.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -293,7 +300,7 @@ DEPENDENCIES
   devise (~> 5.0)
   doorkeeper (~> 5.9)
   factory_bot_rails
-  jsonapi-resources (= 0.10.7)
+  jsonapi-resources!
   kamal
   pg
   puma (>= 5.0)
@@ -340,7 +347,7 @@ CHECKSUMS
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   io-console (0.9.2) sha256=efa74f891dd03c0939a931dfc6e74c2813d904763d456ea9762b0525e748db08
   irb (1.18.0) sha256=de9454a0703a54704b9811a5ef31a60c86949fbf4013fcf244fabc7c775248e3
-  jsonapi-resources (0.10.7) sha256=6429a59d7b9b37cd6708e966130ffe4ce41f4edc1c13bae04f9e38c35d90018d
+  jsonapi-resources (26.1.3)
   kamal (2.12.0) sha256=c51d1ab085e515470f98d0c0f043637122b5ebf76e8b610cb1fbbed0b7f9b8fa
   logger (1.7.0) sha256=196edec7cc44b66cfb40f9755ce11b392f21f7967696af15d274dde7edff0203
   loofah (2.25.2) sha256=2007f746959ac65552456e04b433e83deb22759ab38c838b4445c70e43425918

@@ -8,7 +8,7 @@ gem 'pg'
 gem 'puma', '>= 5.0'
 gem 'thruster', require: false
 
-gem 'jsonapi-resources', '0.10.7'
+gem 'jsonapi-resources', github: 'speee/jsonapi-resources', tag: 'v26.1.3'
 
 gem 'csv'
 

@@ -89,7 +89,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     list.reload
     assert_equal false, list.deleted
   end
@@ -101,7 +101,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     list.reload
     assert_equal false, list.deleted
   end
@@ -113,7 +113,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_delete "/api/v2/lists/#{list.id}"
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
     list.reload
     assert_equal false, list.deleted
   end
@@ -147,7 +147,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "trying to create a new 'recurring-task-day' list via POST fails" do
@@ -166,7 +166,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "trying to create a new list with an unknown type via POST fails" do
@@ -185,7 +185,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     assert_no_difference 'List.unscoped.count' do
       json_api_post '/api/v2/lists', params: params.to_json
     end
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "can create a new 'list'-type list via POST" do
@@ -224,7 +224,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     }
 
     json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "cannot edit a 'recurring-task-day'-type list via PATCH" do
@@ -244,7 +244,7 @@ class ListsTest < ActionDispatch::IntegrationTest
     }
 
     json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "cannot change list_type of a 'list'-type list via PATCH" do
@@ -265,7 +265,7 @@ class ListsTest < ActionDispatch::IntegrationTest
 
     json_api_patch "/api/v2/lists/#{list.id}", params: params.to_json
 
-    assert_response :unprocessable_entity
+    assert_response :unprocessable_content
   end
 
   test "can change the name of a 'list'-type list via PATCH" do
