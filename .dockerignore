@@ -1,0 +1,32 @@
+# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more details.
+
+# Ignore version control files.
+.git
+.gitignore
+
+# Ignore bundler config and local gems.
+.bundle
+vendor/bundle
+
+# Ignore all logfiles and tempfiles.
+log/*
+tmp/*
+!log/.keep
+!tmp/.keep
+
+# Ignore editor and OS files.
+.byebug_history
+.DS_Store
+
+# Ignore Kamal config (not needed inside the container).
+.kamal
+
+# Ignore development-only files.
+.travis.yml
+.github
+
+# Ignore master key for decrypting credentials and more.
+/config/master.key
+
+# Ignore local environment file (contains secrets, loaded via direnv).
+/.env

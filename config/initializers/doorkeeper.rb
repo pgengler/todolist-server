@@ -49,6 +49,11 @@ Doorkeeper.configure do
   # Issue access tokens with refresh token (disabled by default)
   use_refresh_token
 
+  # Skip client authentication for the Resource Owner Password Grant flow.
+  # The client app (ember-simple-auth) does not send client_id/client_secret.
+  # Note: this is technically in violation of the OAuth spec.
+  skip_client_authentication_for_password_grant true
+
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default false) if you want to enforce ownership of
   # a registered application
